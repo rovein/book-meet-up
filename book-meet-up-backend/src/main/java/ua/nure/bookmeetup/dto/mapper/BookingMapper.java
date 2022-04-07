@@ -5,6 +5,7 @@ import ua.nure.bookmeetup.dto.booking.BookingInfoDto;
 import ua.nure.bookmeetup.dto.booking.BookingResponseDto;
 import ua.nure.bookmeetup.entity.booking.Booking;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,10 +22,10 @@ public class BookingMapper {
                 .setEmployeeId(booking.getEmployee().getId());
     }
 
-    public static Set<BookingInfoDto> toBookingInfoDto(Set<BookingInfo> storages) {
+    public static List<BookingInfoDto> toBookingInfoDto(List<BookingInfo> storages) {
         return storages.stream()
                 .map(BookingInfoDto::new)
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
 }

@@ -21,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
 
@@ -60,6 +61,28 @@ public class Booking {
     @JoinColumn(name = "meeting_room_id")
     @ToString.Exclude
     private MeetingRoom meetingRoom;
+
+    public boolean meetingIsInProgress() {
+        if (BookingStatus.IN_PROGRESS.equals(status)) {
+            return true;
+        }
+        LocalDateTime dateTime = getDateAndTime();
+        boolean isStarted = dateTime.isAfter(LocalDateTime.now());
+        boolean isInProgress = dateTime.isBefore(dateTime.plusMinutes(duration));
+        return isStarted && isInProgress;
+    }
+
+    public boolean meetingIsFinished() {
+        if (BookingStatus.FINISHED.equals(status)) {
+            return true;
+        }
+        LocalDateTime dateTime = getDateAndTime();
+        return dateTime.isAfter(dateTime.plusMinutes(duration));
+    }
+
+    public LocalDateTime getDateAndTime() {
+        return LocalDateTime.of(date, time);
+    }
 
     @Override
     public boolean equals(Object o) {

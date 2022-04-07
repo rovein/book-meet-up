@@ -3,6 +3,7 @@ package ua.nure.bookmeetup.dto.mapper;
 import ua.nure.bookmeetup.dto.OfficeBuildingDto;
 import ua.nure.bookmeetup.entity.OfficeBuilding;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -17,13 +18,12 @@ public class OfficeBuildingMapper {
                 .setName(officeBuilding.getName());
     }
 
-    public static Set<OfficeBuildingDto> toOfficeBuildingDto(Set<OfficeBuilding> officeBuildings) {
-        return officeBuildings.stream().map(OfficeBuildingMapper::toOfficeBuildingDto).collect(Collectors.toSet());
+    public static List<OfficeBuildingDto> toOfficeBuildingDto(List<OfficeBuilding> officeBuildings) {
+        return officeBuildings.stream().map(OfficeBuildingMapper::toOfficeBuildingDto).collect(Collectors.toList());
     }
 
-    public static OfficeBuilding toOfficeBuilding(OfficeBuildingDto officeBuildingDto) {
-        return new OfficeBuilding()
-                .setId(officeBuildingDto.getId() == null ? 0 : officeBuildingDto.getId())
+    public static OfficeBuilding toOfficeBuilding(OfficeBuildingDto officeBuildingDto, OfficeBuilding officeBuilding) {
+        return officeBuilding
                 .setCity(officeBuildingDto.getCity())
                 .setStreet(officeBuildingDto.getStreet())
                 .setHouse(officeBuildingDto.getHouse())

@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,7 +37,7 @@ public class Employee extends User {
 
     @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
     @ToString.Exclude
-    private Set<Booking> bookings;
+    private List<Booking> bookings;
 
     @Override
     public boolean equals(Object o) {
