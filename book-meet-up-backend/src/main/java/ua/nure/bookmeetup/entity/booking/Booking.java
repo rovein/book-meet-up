@@ -62,26 +62,42 @@ public class Booking {
     @ToString.Exclude
     private MeetingRoom meetingRoom;
 
-    public boolean meetingIsInProgress() {
+    public LocalDateTime startDateAndTime() {
+        return LocalDateTime.of(date, time);
+    }
+
+    public LocalDateTime endDateAndTime() {
+        return startDateAndTime().plusMinutes(duration);
+    }
+
+    public LocalTime endTime() {
+        return time.plusMinutes(duration);
+    }
+
+    public boolean isNotStarted() {
+        return BookingStatus.CREATED.equals(status);
+    }
+
+    public boolean isInProgress() {
         if (BookingStatus.IN_PROGRESS.equals(status)) {
             return true;
         }
-        LocalDateTime dateTime = getDateAndTime();
-        boolean isStarted = dateTime.isAfter(LocalDateTime.now());
-        boolean isInProgress = dateTime.isBefore(dateTime.plusMinutes(duration));
+        LocalDateTime startDateAndTime = startDateAndTime();
+        boolean isStarted = startDateAndTime.isAfter(LocalDateTime.now());
+        boolean isInProgress = startDateAndTime.isBefore(endDateAndTime());
         return isStarted && isInProgress;
     }
 
-    public boolean meetingIsFinished() {
+    public boolean isFinished() {
         if (BookingStatus.FINISHED.equals(status)) {
             return true;
         }
-        LocalDateTime dateTime = getDateAndTime();
-        return dateTime.isAfter(dateTime.plusMinutes(duration));
+        LocalDateTime dateTime = startDateAndTime();
+        return dateTime.isAfter(endDateAndTime());
     }
 
-    public LocalDateTime getDateAndTime() {
-        return LocalDateTime.of(date, time);
+    public boolean isCanceled() {
+        return BookingStatus.CANCELED.equals(status);
     }
 
     @Override

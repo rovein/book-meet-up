@@ -2,6 +2,7 @@ package ua.nure.bookmeetup.service;
 
 import ua.nure.bookmeetup.dto.MeetingRoomDto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MeetingRoomService {
@@ -15,5 +16,7 @@ public interface MeetingRoomService {
     MeetingRoomDto findMeetingRoomById(Long id);
 
     void deleteMeetingRoom(MeetingRoomDto meetingRoomDto);
+
+    List<MeetingRoomDto> getRoomsAvailableForBooking(Long officeId, LocalDateTime dateTime, Short duration);
 
 }

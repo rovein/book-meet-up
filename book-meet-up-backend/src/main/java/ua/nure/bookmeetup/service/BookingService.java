@@ -6,11 +6,10 @@ import ua.nure.bookmeetup.dto.booking.BookingRequestDto;
 import ua.nure.bookmeetup.dto.booking.BookingResponseDto;
 
 import java.util.List;
-import java.util.Set;
 
 public interface BookingService {
 
-    BookingResponseDto create(BookingRequestDto bookingRequestDto);
+    BookingResponseDto createSingle(BookingRequestDto bookingRequestDto);
 
     BookingResponseDto update(BookingRequestDto bookingRequestDto);
 

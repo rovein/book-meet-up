@@ -57,7 +57,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingResponseDto create(BookingRequestDto bookingRequestDto) {
+    public BookingResponseDto createSingle(BookingRequestDto bookingRequestDto) {
         Booking booking = new Booking();
 
         Employee employee = employeeRepository
@@ -168,10 +168,10 @@ public class BookingServiceImpl implements BookingService {
 
     private void changeStatus(Booking booking) {
         BookingStatus status = booking.getStatus();
-        if (CREATED.equals(status) && booking.meetingIsInProgress()) {
+        if (CREATED.equals(status) && booking.isInProgress()) {
             log.info("Changing status from CREATED to IN_PROGRESS for booking {}", booking.getId());
             booking.setStatus(IN_PROGRESS);
-        } else if (IN_PROGRESS.equals(status) && booking.meetingIsFinished()) {
+        } else if (IN_PROGRESS.equals(status) && booking.isFinished()) {
             log.info("Changing status from IN_PROGRESS to FINISHED for booking {}", booking.getId());
             booking.setStatus(BookingStatus.FINISHED);
         }

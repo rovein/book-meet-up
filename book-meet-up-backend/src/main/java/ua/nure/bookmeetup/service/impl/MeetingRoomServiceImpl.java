@@ -2,17 +2,25 @@ package ua.nure.bookmeetup.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.threeten.extra.Interval;
 import ua.nure.bookmeetup.dto.MeetingRoomDto;
 import ua.nure.bookmeetup.dto.mapper.MeetingRoomMapper;
 import ua.nure.bookmeetup.entity.MeetingRoom;
 import ua.nure.bookmeetup.entity.OfficeBuilding;
+import ua.nure.bookmeetup.entity.booking.Booking;
 import ua.nure.bookmeetup.exception.EntityNotFoundException;
 import ua.nure.bookmeetup.repository.MeetingRoomRepository;
 import ua.nure.bookmeetup.repository.OfficeBuildingRepository;
 import ua.nure.bookmeetup.service.MeetingRoomService;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_MEETING_ROOM_BY_ID;
 import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_OFFICE_BUILDING_BY_ID;
@@ -74,6 +82,45 @@ public class MeetingRoomServiceImpl implements MeetingRoomService {
         MeetingRoom meetingRoom = MeetingRoomMapper.toMeetingRoom(meetingRoomDto);
         meetingRoom.setOfficeBuilding(parentBuilding);
         return MeetingRoomMapper.toMeetingRoomDto(meetingRoomRepository.save(meetingRoom));
+    }
+
+    @Override
+    public List<MeetingRoomDto> getRoomsAvailableForBooking(Long officeId, LocalDateTime dateTime, Short duration) {
+        return officeBuildingRepository.findById(officeId)
+                .map(officeBuilding -> getRoomsAvailableForBooking(officeBuilding, dateTime, duration))
+                .orElseThrow(() -> new EntityNotFoundException(ERROR_FIND_OFFICE_BUILDING_BY_ID));
+    }
+
+    private List<MeetingRoomDto> getRoomsAvailableForBooking(OfficeBuilding officeBuilding, LocalDateTime dateTime,
+                                                             Short duration) {
+        return MeetingRoomMapper.toMeetingRoomDto(
+                officeBuilding.getMeetingRooms().stream()
+                        .filter(meetingRoom -> isRoomAvailableForBooking(meetingRoom, dateTime, duration))
+                        .collect(Collectors.toList())
+        );
+    }
+
+    private boolean isRoomAvailableForBooking(MeetingRoom meetingRoom, LocalDateTime requestedStartDateTime,
+                                              Short duration) {
+        Predicate<Booking> requestedTimeSlotHasConflict = booking -> {
+            var requestedEndTime = requestedStartDateTime.plusMinutes(duration);
+            var bookingStartTime = booking.startDateAndTime();
+            var bookingEndTime = booking.endDateAndTime();
+            var requestedInterval = createInterval(requestedStartDateTime, requestedEndTime);
+            var bookingInterval = createInterval(bookingStartTime, bookingEndTime);
+            return requestedInterval.overlaps(bookingInterval);
+        };
+        return meetingRoom.getBookings().stream()
+                .filter(booking -> booking.getDate().isEqual(requestedStartDateTime.toLocalDate()))
+                .filter(booking -> !(booking.isCanceled() || booking.isFinished()))
+                .noneMatch(requestedTimeSlotHasConflict);
+    }
+
+    private Interval createInterval (LocalDateTime from, LocalDateTime to) {
+        return Interval.of(
+                Instant.from(ZonedDateTime.of(from, ZoneId.systemDefault())),
+                Instant.from(ZonedDateTime.of(to, ZoneId.systemDefault()))
+        );
     }
 
 }
