@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ua.nure.bookmeetup.dto.booking.BookingInfoDto;
 import ua.nure.bookmeetup.dto.booking.BookingRequestDto;
 import ua.nure.bookmeetup.service.BookingService;
 
@@ -85,6 +84,13 @@ public class BookingController {
     public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
         bookingService.findById(id);
         bookingService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/cancel/{id}")
+    @ApiOperation(value = "Cancels provided booking", nickname = "cancelBooking")
+    public ResponseEntity<?> cancelBooking(@PathVariable Long id) {
+        bookingService.cancelBooking(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

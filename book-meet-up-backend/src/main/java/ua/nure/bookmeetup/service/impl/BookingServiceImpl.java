@@ -182,7 +182,11 @@ public class BookingServiceImpl implements BookingService {
     @Override
     @Transactional
     public void cancelBooking(Long bookingId) {
-        bookingRepository.findById(bookingId).ifPresent(booking -> booking.setStatus(BookingStatus.CANCELED));
+        bookingRepository.findById(bookingId)
+                .ifPresentOrElse(booking -> booking.setStatus(BookingStatus.CANCELED),
+                        () -> {
+                            throw new EntityNotFoundException(ERROR_FIND_BOOKING_BY_ID);
+                        });
     }
 
 }
