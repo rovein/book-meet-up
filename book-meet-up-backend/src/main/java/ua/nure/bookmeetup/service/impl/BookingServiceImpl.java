@@ -3,6 +3,7 @@ package ua.nure.bookmeetup.service.impl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import ua.nure.bookmeetup.dto.booking.BookingInfo;
 import ua.nure.bookmeetup.dto.booking.BookingInfoDto;
 import ua.nure.bookmeetup.dto.booking.BookingRequestDto;
@@ -147,9 +148,10 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public BookingInfo getBookingInfoById(Long bookingId) {
+    public BookingInfoDto getBookingInfoById(Long bookingId) {
         return Optional.of(findById(bookingId))
                 .map(booking -> bookingRepository.getBookingInfoById(bookingId))
+                .map(BookingInfoDto::new)
                 .orElseThrow(() -> new EntityNotFoundException(ERROR_FIND_BOOKING_BY_ID));
     }
 

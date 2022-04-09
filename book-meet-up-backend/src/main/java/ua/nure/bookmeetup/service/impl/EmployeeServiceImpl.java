@@ -17,7 +17,9 @@ import java.util.Optional;
 
 import static ua.nure.bookmeetup.dto.mapper.EmployeeMapper.toEmployee;
 import static ua.nure.bookmeetup.dto.mapper.EmployeeMapper.toEmployeeDto;
-import static ua.nure.bookmeetup.util.ErrorMessagesUtil.*;
+import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_EMPLOYEE_BY_EMAIL;
+import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_EMPLOYEE_BY_ID;
+import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_EMPLOYEE_BY_PHONE_NUMBER;
 
 @Service
 @Log4j2
@@ -45,6 +47,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeDto update(EmployeeDto employeeDto) {
         return employeeRepository.findByEmail(employeeDto.getEmail())
                 .map(initialEmployee -> {
+                    String password = employeeDto.getPassword();
+                    if (password == null || password.isEmpty()) {
+                        employeeDto.setPassword(initialEmployee.getPassword());
+                    }
                     Employee employee = toEmployee(employeeDto, initialEmployee, bCryptPasswordEncoder);
                     return toEmployeeDto(employee);
                 }).orElseThrow(() -> new EntityNotFoundException(ERROR_FIND_EMPLOYEE_BY_EMAIL));

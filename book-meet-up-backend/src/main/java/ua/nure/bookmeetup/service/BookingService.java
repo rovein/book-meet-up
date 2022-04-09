@@ -21,7 +21,7 @@ public interface BookingService {
 
     List<BookingInfoDto> getAllBookingsByMeetingRoom(Long meetingRoomId);
 
-    BookingInfo getBookingInfoById(Long bookingId);
+    BookingInfoDto getBookingInfoById(Long bookingId);
 
     void checkAndUpdateBookingStatuses();
 
