@@ -13,6 +13,7 @@ import ua.nure.bookmeetup.repository.MeetingRoomRepository;
 import ua.nure.bookmeetup.repository.OfficeBuildingRepository;
 import ua.nure.bookmeetup.service.MeetingRoomService;
 
+import javax.transaction.Transactional;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -85,6 +86,7 @@ public class MeetingRoomServiceImpl implements MeetingRoomService {
     }
 
     @Override
+    @Transactional
     public List<MeetingRoomDto> getRoomsAvailableForBooking(Long officeId, LocalDateTime dateTime, Short duration) {
         return officeBuildingRepository.findById(officeId)
                 .map(officeBuilding -> getRoomsAvailableForBooking(officeBuilding, dateTime, duration))
