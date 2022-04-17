@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.nure.bookmeetup.dto.booking.BookingRequestDto;
 import ua.nure.bookmeetup.service.BookingService;
@@ -43,14 +44,16 @@ public class BookingController {
 
     @GetMapping("/employee/{id}")
     @ApiOperation(value = "Finds all bookings for provided employee", nickname = "getAllBookingsByEmployee")
-    public ResponseEntity<?> getAllBookingsByEmployee(@PathVariable Long id) {
-        return ResponseEntity.ok(bookingService.getAllBookingsByEmployee(id));
+    public ResponseEntity<?> getAllBookingsByEmployee(@PathVariable Long id,
+                                                      @RequestParam(defaultValue = "true") Boolean isUpcoming) {
+        return ResponseEntity.ok(bookingService.getAllBookingsByEmployee(id, isUpcoming));
     }
 
     @GetMapping("/meeting-room/{id}")
     @ApiOperation(value = "Finds all bookings for provided meeting room", nickname = "getAllBookingsByMeetingRoom")
-    public ResponseEntity<?> getAllBookingsByMeetingRoom(@PathVariable Long id) {
-        return ResponseEntity.ok(bookingService.getAllBookingsByMeetingRoom(id));
+    public ResponseEntity<?> getAllBookingsByMeetingRoom(@PathVariable Long id,
+                                                         @RequestParam(defaultValue = "true") Boolean isUpcoming) {
+        return ResponseEntity.ok(bookingService.getAllBookingsByMeetingRoom(id, isUpcoming));
     }
 
     @GetMapping("/info/{id}")

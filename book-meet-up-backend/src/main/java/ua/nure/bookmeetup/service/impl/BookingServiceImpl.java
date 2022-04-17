@@ -2,7 +2,9 @@ package ua.nure.bookmeetup.service.impl;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
+import ua.nure.bookmeetup.dto.booking.BookingInfo;
 import ua.nure.bookmeetup.dto.booking.BookingInfoDto;
 import ua.nure.bookmeetup.dto.booking.BookingRequestDto;
 import ua.nure.bookmeetup.dto.booking.BookingResponseDto;
@@ -21,6 +23,7 @@ import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import static ua.nure.bookmeetup.entity.booking.BookingStatus.CREATED;
 import static ua.nure.bookmeetup.entity.booking.BookingStatus.IN_PROGRESS;
@@ -93,19 +96,23 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingInfoDto> getAllBookingsByEmployee(Long employeeId) {
-        return employeeRepository.findById(employeeId)
-                .map(Employee::getId)
-                .map(bookingRepository::getAllBookingsByEmployee)
-                .map(BookingMapper::toBookingInfoDto)
-                .orElse(Collections.emptyList());
+    public List<BookingInfoDto> getAllBookingsByEmployee(Long employeeId, boolean isUpcoming) {
+        return getAllBookingsBy(employeeRepository, employeeId, isUpcoming
+                ? bookingRepository::getAllUpcomingBookingsByEmployee
+                : bookingRepository::getAllBookingsByEmployee);
     }
 
     @Override
-    public List<BookingInfoDto> getAllBookingsByMeetingRoom(Long meetingRoomId) {
-        return meetingRoomRepository.findById(meetingRoomId)
-                .map(MeetingRoom::getId)
-                .map(bookingRepository::getAllBookingsByMeetingRoom)
+    public List<BookingInfoDto> getAllBookingsByMeetingRoom(Long meetingRoomId, boolean isUpcoming) {
+        return getAllBookingsBy(meetingRoomRepository, meetingRoomId, isUpcoming
+                ? bookingRepository::getAllUpcomingBookingsByMeetingRoom
+                : bookingRepository::getAllBookingsByMeetingRoom);
+    }
+
+    public List<BookingInfoDto> getAllBookingsBy(CrudRepository<?, Long> repository, Long id,
+                                                 Function<Long, List<BookingInfo>> bookingsFinder) {
+        return repository.findById(id)
+                .map(entity -> bookingsFinder.apply(id))
                 .map(BookingMapper::toBookingInfoDto)
                 .orElse(Collections.emptyList());
     }

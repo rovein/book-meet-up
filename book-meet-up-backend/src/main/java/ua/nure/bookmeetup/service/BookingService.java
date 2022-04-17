@@ -17,9 +17,9 @@ public interface BookingService {
 
     BookingResponseDto findById(Long id);
 
-    List<BookingInfoDto> getAllBookingsByEmployee(Long employeeId);
+    List<BookingInfoDto> getAllBookingsByEmployee(Long employeeId, boolean isUpcoming);
 
-    List<BookingInfoDto> getAllBookingsByMeetingRoom(Long meetingRoomId);
+    List<BookingInfoDto> getAllBookingsByMeetingRoom(Long meetingRoomId, boolean isUpcoming);
 
     BookingInfoDto getBookingInfoById(Long bookingId);
 
