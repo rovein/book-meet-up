@@ -20,7 +20,7 @@ public class BookingScheduledServiceImpl implements BookingScheduledService {
     }
 
     @Async
-    @Scheduled(cron = "* * * * *")
+    @Scheduled(cron = "0 * * * * *")
     public void checkAndUpdateBookingStatuses() {
         log.info("Starting scheduled job to check and change booking statuses...");
         bookingService.checkAndUpdateBookingStatuses();
