@@ -20,14 +20,13 @@ public class EmailNotificationSender {
     public static void sendBookingCreatedEmailNotification(Employee employee, Booking booking,
                                                            MeetingRoom meetingRoom, OfficeBuilding officeBuilding) {
         String content = EmailUtil.retrieveContentFromHtmlTemplate("email-templates/booking-created.html");
-        LocalDateTime creationDate = LocalDateTime.now();
         new Thread(() -> EmailUtil.message()
                 .destination(employee.getEmail())
                 .subject("Створено нове бронювання кімнати")
                 .body(String.format(content,
                         employee.getFirstName() + " " + employee.getLastName(),
-                        DATE_FORMAT.format(creationDate),
-                        TIME_FORMAT.format(creationDate),
+                        DATE_FORMAT.format(booking.getDate()),
+                        TIME_FORMAT.format(booking.getTime()),
                         booking.getDuration(),
                         meetingRoom.getNumber(),
                         meetingRoom.getFloor(),
