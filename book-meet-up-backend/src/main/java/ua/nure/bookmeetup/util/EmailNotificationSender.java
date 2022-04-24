@@ -17,9 +17,9 @@ public class EmailNotificationSender {
     private EmailNotificationSender() {
     }
 
-    public static void sendBookingCreatedEmailNotification(Employee employee, Booking booking,
-                                                           MeetingRoom meetingRoom, OfficeBuilding officeBuilding) {
+    public static void sendBookingCreatedEmailNotification(Employee employee, Booking booking, MeetingRoom meetingRoom) {
         String content = EmailUtil.retrieveContentFromHtmlTemplate("email-templates/booking-created.html");
+        OfficeBuilding officeBuilding = meetingRoom.getOfficeBuilding();
         new Thread(() -> EmailUtil.message()
                 .destination(employee.getEmail())
                 .subject("Створено нове бронювання кімнати")

@@ -65,7 +65,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setMeetingRoom(meetingRoom);
 
         Booking createdBooking = bookingRepository.save(booking);
-        sendBookingCreatedEmailNotification(employee, createdBooking, meetingRoom, meetingRoom.getOfficeBuilding());
+        sendBookingCreatedEmailNotification(employee, createdBooking, meetingRoom);
 
         return BookingMapper.toBookingResponseDto(createdBooking);
     }

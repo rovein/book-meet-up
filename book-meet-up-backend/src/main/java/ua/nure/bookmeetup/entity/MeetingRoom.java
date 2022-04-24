@@ -45,7 +45,7 @@ public class MeetingRoom {
     private String info;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "office_building_id")
     @ToString.Exclude
     protected OfficeBuilding officeBuilding;
