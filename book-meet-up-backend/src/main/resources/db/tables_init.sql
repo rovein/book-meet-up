@@ -59,8 +59,6 @@ CREATE TABLE IF NOT EXISTS meeting_room
         FOREIGN KEY (office_building_id) REFERENCES office_building (office_building_id) ON DELETE CASCADE
 );
 
-CREATE TYPE booking_status AS ENUM ('CREATED', 'IN_PROGRESS', 'FINISHED', 'CANCELED');
-
 CREATE TABLE IF NOT EXISTS booking
 (
     booking_id      BIGINT,
@@ -68,7 +66,7 @@ CREATE TABLE IF NOT EXISTS booking
     time            TIME           NOT NULL,
     --15 30 60 (1) 90 (1:30) 120 (2) 240 (4) 360 (6) 480 (8)
     duration        INT            NOT NULL,
-    status          booking_status NOT NULL,
+    status          VARCHAR(12) NOT NULL,
     employee_id     BIGINT         NOT NULL,
     meeting_room_id BIGINT         NOT NULL,
     CONSTRAINT PK_booking PRIMARY KEY (booking_id),
