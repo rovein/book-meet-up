@@ -43,8 +43,6 @@ public class EmployeeDto {
     @ApiModelProperty(hidden = true)
     private Boolean isLocked;
 
-    private String country;
-
     public EmployeeDto setLockStatus(boolean isLocked) {
         this.isLocked = isLocked;
         return this;
