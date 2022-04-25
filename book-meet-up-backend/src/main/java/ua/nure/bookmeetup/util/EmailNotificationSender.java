@@ -26,6 +26,11 @@ public class EmailNotificationSender {
                 employee, booking, booking.getMeetingRoom());
     }
 
+    public static void sendBookingEmailReminder(Booking booking) {
+        sendBookingNotification("email-templates/meeting-reminder.html", "Нагадування про переговорну зустріч",
+                booking.getEmployee(), booking, booking.getMeetingRoom());
+    }
+
     private static void sendBookingNotification(String pathToTemplate, String subject, Employee employee,
                                                 Booking booking, MeetingRoom meetingRoom) {
         String content = EmailUtil.retrieveContentFromHtmlTemplate(pathToTemplate);

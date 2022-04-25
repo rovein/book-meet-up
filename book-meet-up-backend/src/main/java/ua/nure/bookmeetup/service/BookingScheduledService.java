@@ -4,4 +4,6 @@ public interface BookingScheduledService {
 
     void checkAndUpdateBookingStatuses();
 
+    void checkAndNotifyAboutUpcomingMeeting();
+
 }

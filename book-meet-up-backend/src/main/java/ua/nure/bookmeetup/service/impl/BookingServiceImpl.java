@@ -20,6 +20,7 @@ import ua.nure.bookmeetup.repository.BookingRepository;
 import ua.nure.bookmeetup.service.BookingService;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,7 @@ import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_EMPLOYEE_BY_I
 import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_MEETING_ROOM_BY_ID;
 import static ua.nure.bookmeetup.util.EmailNotificationSender.sendBookingCreatedEmailNotification;
 import static ua.nure.bookmeetup.util.EmailNotificationSender.sendBookingEmailInvitation;
+import static ua.nure.bookmeetup.util.EmailNotificationSender.sendBookingEmailReminder;
 
 @Service
 @Log4j2
@@ -42,6 +44,8 @@ public class BookingServiceImpl implements BookingService {
     private final MeetingRoomRepository meetingRoomRepository;
 
     private final EmployeeRepository employeeRepository;
+
+    private static final Short FIFTEEN = 15;
 
     @Autowired
     public BookingServiceImpl(BookingRepository bookingRepository,
@@ -167,6 +171,20 @@ public class BookingServiceImpl implements BookingService {
                 .orElseThrow(() -> new EntityNotFoundException(ERROR_FIND_BOOKING_BY_ID));
         List<Employee> invitedEmployees = employeeRepository.findAllWithEmails(emails.toArray(new String[0]));
         invitedEmployees.forEach(employee -> sendBookingEmailInvitation(employee, booking));
+    }
+
+    @Override
+    @Transactional
+    public void checkAndNotifyAboutUpcomingMeeting() {
+        bookingRepository.findAll().stream()
+                .filter(booking -> CREATED.equals(booking.getStatus()))
+                .forEach(booking -> {
+                    LocalDateTime now = LocalDateTime.now().withSecond(0).withNano(0);
+                    LocalDateTime bookingStartTime = booking.startDateAndTime().withSecond(0).withNano(0);
+                    if (now.plusMinutes(FIFTEEN).isEqual(bookingStartTime)) {
+                        sendBookingEmailReminder(booking);
+                    }
+                });
     }
 
 }

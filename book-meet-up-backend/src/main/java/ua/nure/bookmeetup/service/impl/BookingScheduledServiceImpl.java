@@ -27,4 +27,12 @@ public class BookingScheduledServiceImpl implements BookingScheduledService {
         log.info("Scheduled job to check and change booking statuses is finished");
     }
 
+    @Async
+    @Scheduled(cron = "0 * * * * *")
+    public void checkAndNotifyAboutUpcomingMeeting() {
+        log.info("Starting scheduled job to notify about upcoming meeting...");
+        bookingService.checkAndNotifyAboutUpcomingMeeting();
+        log.info("Scheduled job to notify about upcoming meeting is finished");
+    }
+
 }
