@@ -21,6 +21,8 @@ import ua.nure.bookmeetup.service.BookingService;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import static ua.nure.bookmeetup.validation.BindingResultValidator.errorBody;
 
 @CrossOrigin
@@ -94,6 +96,13 @@ public class BookingController {
     @ApiOperation(value = "Cancels provided booking", nickname = "cancelBooking")
     public ResponseEntity<?> cancelBooking(@PathVariable Long id) {
         bookingService.cancelBooking(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/send-invitation")
+    @ApiOperation(value = "Sends email invitation to provided list of emails", nickname = "sendEmailInvitation")
+    public ResponseEntity<?> sendEmailInvitation(@PathVariable Long id, @RequestBody List<String> emails) {
+        bookingService.sendEmailInvitation(id, emails);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

@@ -104,7 +104,7 @@ public class EmailUtil {
         msg.addHeader("format", "flowed");
         msg.addHeader("Content-Transfer-Encoding", "8bit");
 
-        msg.setFrom(new InternetAddress("admin@med-track.com", "Med Track"));
+        msg.setFrom(new InternetAddress("admin@book-meet-up.com", "BookMeetUp"));
         msg.setReplyTo(InternetAddress.parse(USER_NAME, false));
         msg.setSubject(subject, "UTF-8");
         msg.setSentDate(new Date());

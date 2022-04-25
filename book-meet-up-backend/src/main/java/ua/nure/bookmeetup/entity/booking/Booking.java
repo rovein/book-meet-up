@@ -1,5 +1,6 @@
 package ua.nure.bookmeetup.entity.booking;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,6 +44,7 @@ public class Booking {
     private LocalDate date;
 
     @Column(name = "time")
+    @ApiModelProperty(example = "18:00:00")
     private LocalTime time;
 
     @Column(name = "duration")

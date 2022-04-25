@@ -1,5 +1,6 @@
 package ua.nure.bookmeetup.repository;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
@@ -16,5 +17,8 @@ public interface EmployeeRepository extends CrudRepository<Employee, Long> {
     Optional<Employee> findByEmail(String email);
 
     @NonNull List<Employee> findAll();
+
+    @Query("select e from Employee e where e.email in :emails")
+    List<Employee> findAllWithEmails(String[] emails);
 
 }

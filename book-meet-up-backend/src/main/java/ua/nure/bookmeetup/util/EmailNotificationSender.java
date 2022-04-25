@@ -5,7 +5,6 @@ import ua.nure.bookmeetup.entity.OfficeBuilding;
 import ua.nure.bookmeetup.entity.booking.Booking;
 import ua.nure.bookmeetup.entity.user.Employee;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class EmailNotificationSender {
@@ -18,11 +17,22 @@ public class EmailNotificationSender {
     }
 
     public static void sendBookingCreatedEmailNotification(Employee employee, Booking booking, MeetingRoom meetingRoom) {
-        String content = EmailUtil.retrieveContentFromHtmlTemplate("email-templates/booking-created.html");
+        sendBookingNotification("email-templates/booking-created.html", "Створено нове бронювання кімнати",
+                employee, booking, meetingRoom);
+    }
+
+    public static void sendBookingEmailInvitation(Employee employee, Booking booking) {
+        sendBookingNotification("email-templates/meeting-invitation.html", "Запрошеня на переговорну зустріч",
+                employee, booking, booking.getMeetingRoom());
+    }
+
+    private static void sendBookingNotification(String pathToTemplate, String subject, Employee employee,
+                                                Booking booking, MeetingRoom meetingRoom) {
+        String content = EmailUtil.retrieveContentFromHtmlTemplate(pathToTemplate);
         OfficeBuilding officeBuilding = meetingRoom.getOfficeBuilding();
         new Thread(() -> EmailUtil.message()
                 .destination(employee.getEmail())
-                .subject("Створено нове бронювання кімнати")
+                .subject(subject)
                 .body(String.format(content,
                         employee.getFirstName() + " " + employee.getLastName(),
                         DATE_FORMAT.format(booking.getDate()),

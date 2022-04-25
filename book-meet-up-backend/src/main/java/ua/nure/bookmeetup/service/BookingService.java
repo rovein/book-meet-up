@@ -1,6 +1,5 @@
 package ua.nure.bookmeetup.service;
 
-import ua.nure.bookmeetup.dto.booking.BookingInfo;
 import ua.nure.bookmeetup.dto.booking.BookingInfoDto;
 import ua.nure.bookmeetup.dto.booking.BookingRequestDto;
 import ua.nure.bookmeetup.dto.booking.BookingResponseDto;
@@ -26,5 +25,7 @@ public interface BookingService {
     void checkAndUpdateBookingStatuses();
 
     void cancelBooking(Long bookingId);
+
+    void sendEmailInvitation(Long bookingId, List<String> emails);
 
 }

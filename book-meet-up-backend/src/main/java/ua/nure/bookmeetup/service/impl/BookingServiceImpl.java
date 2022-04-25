@@ -31,6 +31,7 @@ import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_BOOKING_BY_ID
 import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_EMPLOYEE_BY_ID;
 import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_MEETING_ROOM_BY_ID;
 import static ua.nure.bookmeetup.util.EmailNotificationSender.sendBookingCreatedEmailNotification;
+import static ua.nure.bookmeetup.util.EmailNotificationSender.sendBookingEmailInvitation;
 
 @Service
 @Log4j2
@@ -157,6 +158,15 @@ public class BookingServiceImpl implements BookingService {
                         () -> {
                             throw new EntityNotFoundException(ERROR_FIND_BOOKING_BY_ID);
                         });
+    }
+
+    @Override
+    @Transactional
+    public void sendEmailInvitation(Long bookingId, List<String> emails) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new EntityNotFoundException(ERROR_FIND_BOOKING_BY_ID));
+        List<Employee> invitedEmployees = employeeRepository.findAllWithEmails(emails.toArray(new String[0]));
+        invitedEmployees.forEach(employee -> sendBookingEmailInvitation(employee, booking));
     }
 
 }
