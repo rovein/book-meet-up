@@ -22,7 +22,7 @@ public class EmailNotificationSender {
     }
 
     public static void sendBookingEmailInvitation(Employee employee, Booking booking) {
-        sendBookingNotification("email-templates/meeting-invitation.html", "Запрошеня на переговорну зустріч",
+        sendBookingNotification("email-templates/meeting-invitation.html", "Запрошення на переговорну зустріч",
                 employee, booking, booking.getMeetingRoom());
     }
 
