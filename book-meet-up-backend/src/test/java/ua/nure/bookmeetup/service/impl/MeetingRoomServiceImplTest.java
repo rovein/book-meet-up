@@ -9,6 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.nure.bookmeetup.dto.MeetingRoomDto;
 import ua.nure.bookmeetup.entity.MeetingRoom;
@@ -25,6 +27,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -106,55 +109,58 @@ public class MeetingRoomServiceImplTest {
     @Order(5)
     @DisplayName("Meeting room is not available if it has booking with the same date and time as requested")
     public void roomIsNotAvailableIfItHasTheSameBookingAsRequested() {
-        Booking conflictBooking = new Booking();
+        Booking conflictBooking = conflictBooking();
         conflictBooking.setDate(dateTime.toLocalDate());
         conflictBooking.setTime(dateTime.toLocalTime());
         conflictBooking.setDuration(duration);
         mockMeetingRoom(List.of(conflictBooking));
 
-        List<MeetingRoomDto> availableMeetingRooms =
-                meetingRoomService.getRoomsAvailableForBooking(officeId, dateTime, duration);
-
-        verifyMeetingRoomIsNotAvailable(availableMeetingRooms);
+        wrapWithMockedLocalDateTimeNow(() -> {
+            List<MeetingRoomDto> availableMeetingRooms =
+                    meetingRoomService.getRoomsAvailableForBooking(officeId, dateTime, duration);
+            verifyMeetingRoomIsNotAvailable(availableMeetingRooms);
+        });
     }
 
     @Test
     @Order(6)
     @DisplayName("Meeting room is not available if it has booking which interval intersects with start time of requested")
     public void roomIsNotAvailableIfBookingIntersectsWithStartTime() {
-        Booking conflictBooking = new Booking();
+        Booking conflictBooking = conflictBooking();
         conflictBooking.setDate(dateTime.toLocalDate());
         conflictBooking.setTime(dateTime.toLocalTime().minusMinutes(30));
         conflictBooking.setDuration(duration);
         mockMeetingRoom(List.of(conflictBooking));
 
-        List<MeetingRoomDto> availableMeetingRooms =
-                meetingRoomService.getRoomsAvailableForBooking(officeId, dateTime, duration);
-
-        verifyMeetingRoomIsNotAvailable(availableMeetingRooms);
+        wrapWithMockedLocalDateTimeNow(() -> {
+            List<MeetingRoomDto> availableMeetingRooms =
+                    meetingRoomService.getRoomsAvailableForBooking(officeId, dateTime, duration);
+            verifyMeetingRoomIsNotAvailable(availableMeetingRooms);
+        });
     }
 
     @Test
     @Order(7)
     @DisplayName("Meeting room is not available if it has booking which interval intersects with end time of requested")
     public void roomIsNotAvailableIfBookingIntersectsWithEndTime() {
-        Booking conflictBooking = new Booking();
+        Booking conflictBooking = conflictBooking();
         conflictBooking.setDate(dateTime.toLocalDate());
         conflictBooking.setTime(dateTime.toLocalTime().plusMinutes(30));
         conflictBooking.setDuration(duration);
         mockMeetingRoom(List.of(conflictBooking));
 
-        List<MeetingRoomDto> availableMeetingRooms =
-                meetingRoomService.getRoomsAvailableForBooking(officeId, dateTime, duration);
-
-        verifyMeetingRoomIsNotAvailable(availableMeetingRooms);
+        wrapWithMockedLocalDateTimeNow(() -> {
+            List<MeetingRoomDto> availableMeetingRooms =
+                    meetingRoomService.getRoomsAvailableForBooking(officeId, dateTime, duration);
+            verifyMeetingRoomIsNotAvailable(availableMeetingRooms);
+        });
     }
 
     @Test
     @Order(8)
     @DisplayName("Meeting room is not available if it has both valid and conflict bookings")
     public void roomIsNotAvailableIfThereAreBothValidAndConflictMeetings() {
-        Booking conflictBooking = new Booking();
+        Booking conflictBooking = conflictBooking();
         conflictBooking.setDate(dateTime.toLocalDate());
         conflictBooking.setTime(dateTime.toLocalTime().minusMinutes(30));
         conflictBooking.setDuration(duration);
@@ -162,13 +168,21 @@ public class MeetingRoomServiceImplTest {
         Booking validBooking = new Booking();
         validBooking.setDate(dateTime.toLocalDate());
         validBooking.setTime(dateTime.toLocalTime().minusMinutes(duration * 2));
+        validBooking.setStatus(BookingStatus.IN_PROGRESS);
 
         mockMeetingRoom(List.of(conflictBooking, validBooking));
 
-        List<MeetingRoomDto> availableMeetingRooms =
-                meetingRoomService.getRoomsAvailableForBooking(officeId, dateTime, duration);
+        wrapWithMockedLocalDateTimeNow(() -> {
+            List<MeetingRoomDto> availableMeetingRooms =
+                    meetingRoomService.getRoomsAvailableForBooking(officeId, dateTime, duration);
+            verifyMeetingRoomIsNotAvailable(availableMeetingRooms);
+        });
+    }
 
-        verifyMeetingRoomIsNotAvailable(availableMeetingRooms);
+    private Booking conflictBooking() {
+        Booking conflictBooking = new Booking();
+        conflictBooking.setStatus(BookingStatus.IN_PROGRESS);
+        return conflictBooking;
     }
 
     private void mockMeetingRoom(List<Booking> bookings) {
@@ -180,6 +194,14 @@ public class MeetingRoomServiceImplTest {
         officeBuilding.setMeetingRooms(meetingRooms);
 
         meetingRoom.setBookings(bookings);
+    }
+
+    private void wrapWithMockedLocalDateTimeNow(Runnable action) {
+        try (MockedStatic<LocalDateTime> localDateTimeMockedStatic = Mockito.mockStatic(LocalDateTime.class)) {
+            localDateTimeMockedStatic.when(LocalDateTime::now).thenReturn(dateTime);
+            localDateTimeMockedStatic.when(() -> LocalDateTime.of(any(), any())).thenCallRealMethod();
+            action.run();
+        }
     }
 
     private void verifyMeetingRoomIsAvailable(List<MeetingRoomDto> roomsAvailableForBooking) {

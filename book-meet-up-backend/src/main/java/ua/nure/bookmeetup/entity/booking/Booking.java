@@ -83,7 +83,7 @@ public class Booking {
             return true;
         }
         LocalDateTime startDateAndTime = startDateAndTime();
-        boolean isStarted = startDateAndTime.isAfter(LocalDateTime.now());
+        boolean isStarted = startDateAndTime.isBefore(LocalDateTime.now());
         boolean isInProgress = startDateAndTime.isBefore(endDateAndTime());
         return isStarted && isInProgress;
     }
@@ -92,8 +92,7 @@ public class Booking {
         if (BookingStatus.FINISHED.equals(status)) {
             return true;
         }
-        LocalDateTime dateTime = startDateAndTime();
-        return dateTime.isAfter(endDateAndTime());
+        return LocalDateTime.now().isAfter(endDateAndTime());
     }
 
     public boolean isCanceled() {
