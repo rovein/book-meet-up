@@ -6,19 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.nure.bookmeetup.dto.MeetingRoomDto;
 import ua.nure.bookmeetup.service.MeetingRoomService;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static ua.nure.bookmeetup.validation.BindingResultValidator.errorBody;
@@ -28,7 +21,7 @@ import static ua.nure.bookmeetup.validation.BindingResultValidator.errorBody;
 @RequestMapping("/office-buildings")
 @Api(tags = "5. Meeting Room")
 public class MeetingRoomController {
-    
+
     private final MeetingRoomService meetingRoomService;
 
     @Autowired
@@ -45,8 +38,8 @@ public class MeetingRoomController {
     @PostMapping("/{id}/meeting-rooms")
     @ApiOperation(value = "Adds new meeting room", nickname = "addMeetingRoom")
     public ResponseEntity<?> addMeetingRoom(@PathVariable Long id,
-                                         @Valid @RequestBody MeetingRoomDto meetingRoomDto,
-                                         BindingResult bindingResult) {
+                                            @Valid @RequestBody MeetingRoomDto meetingRoomDto,
+                                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(errorBody(bindingResult));
         }
@@ -56,8 +49,8 @@ public class MeetingRoomController {
     @PutMapping("/{id}/meeting-rooms")
     @ApiOperation(value = "Updates the meeting room", nickname = "updateMeetingRoom")
     public ResponseEntity<?> updateMeetingRoom(@PathVariable Long id,
-                                            @Valid @RequestBody MeetingRoomDto meetingRoomDto,
-                                            BindingResult bindingResult) {
+                                               @Valid @RequestBody MeetingRoomDto meetingRoomDto,
+                                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(errorBody(bindingResult));
         }
@@ -75,6 +68,15 @@ public class MeetingRoomController {
     @ApiOperation(value = "Finds meeting room by ID", nickname = "getMeetingRoomById")
     public ResponseEntity<?> getMeetingRoomById(@PathVariable Long id) {
         return ResponseEntity.ok(meetingRoomService.findMeetingRoomById(id));
+    }
+
+    @GetMapping("/{id}/meeting-rooms/available-for-booking")
+    @ApiOperation(value = "Finds meeting rooms available for booking", nickname = "getMeetingRoomsAvailableForBooking")
+    public ResponseEntity<?> getMeetingRoomsAvailableForBooking(@PathVariable Long id,
+                                                                @RequestParam String dateTime,
+                                                                @RequestParam Short duration) {
+        LocalDateTime parsedDateTime = LocalDateTime.parse(dateTime);
+        return ResponseEntity.ok(meetingRoomService.getRoomsAvailableForBooking(id, parsedDateTime, duration));
     }
 
 }
