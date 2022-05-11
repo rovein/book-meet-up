@@ -1,6 +1,6 @@
 import {useTranslation, withTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
-import PlacementsTable from "../meeting-room/PlacementsTable";
+import PlacementsTable from "../meeting-room/MeetingRoomsTable";
 import {getCurrentOfficeBuilding, getCurrentEmployee} from "../../util/LocalStorageUtils";
 
 function OfficeBuildingInfo() {
