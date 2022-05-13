@@ -1,13 +1,13 @@
 import React from 'react'
 import Header from '../../auth/HeaderAuth'
-import EditPlacementForm from '../../employee/meeting-room/EditMeetingRoomForm'
+import EditMeetingRoomForm from '../../employee/meeting-room/EditMeetingRoomForm'
 
 function EditMeetingRoom() {
     return (
         <div className="signIn">
             <Header/>
             <div className="container">
-                <EditPlacementForm/>
+                <EditMeetingRoomForm/>
             </div>
         </div>
     )
