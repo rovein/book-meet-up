@@ -122,14 +122,8 @@ public class EmployeeControllerTest {
     @Test
     public void testDeleteEmployee() throws Exception {
         when(employeeService.findByEmail(anyString())).thenReturn(employee);
-        doNothing().when(employeeService).delete(employee);
-        mockMvc.perform(delete("/employees/test@gmail.com")).andExpect(status().isOk());
-    }
-
-    @Test
-    public void testDeleteEmployeeWhenEmailIsNotFound() throws Exception {
-        doThrow(EntityNotFoundException.class).when(employeeService).findByEmail(anyString());
-        mockMvc.perform(delete("/employees/test@gmail.com")).andExpect(status().isNoContent());
+        doNothing().when(employeeService).delete(employee.getId());
+        mockMvc.perform(delete("/employees/1")).andExpect(status().isOk());
     }
 
     private void verifyCreateOrUpdateAction(MockHttpServletRequestBuilder requestBuilder) throws Exception {

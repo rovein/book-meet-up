@@ -68,10 +68,10 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.update(employeeDto));
     }
 
-    @DeleteMapping("/{email}")
-    @ApiOperation(value = "Deletes employee by email", nickname = "deleteEmployee")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable String email) {
-        employeeService.delete(employeeService.findByEmail(email));
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletes employee by ID", nickname = "deleteEmployee")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
+        employeeService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

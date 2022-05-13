@@ -10,7 +10,7 @@ public interface EmployeeService {
 
     EmployeeDto update(EmployeeDto employeeDto);
 
-    void delete(EmployeeDto employeeDto);
+    void delete(Long id);
 
     List<EmployeeDto> findAll();
 
