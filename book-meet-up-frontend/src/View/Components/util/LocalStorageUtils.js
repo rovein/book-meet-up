@@ -9,6 +9,7 @@ export const EDIT_USER_EMAIL = "editUserEmail";
 export const EDIT_USER_ROLE = "editUserRole";
 
 export const CURRENT_EMPLOYEE = "currentEmployee";
+export const CURRENT_ADMIN = "currentAdmin";
 export const PROFILE_SHOWN_TABLE = "profileShownTable";
 
 export const EDIT_MEDICINE_ID = "editMedicineId";
@@ -22,6 +23,8 @@ export const CURRENT_MEETING_ROOM_ID = "currentMeetingRoomId";
 export const CURRENT_MEETING_ROOM = "currentMeetingRoom";
 
 export const CURRENT_MEDICINE = "currentMedicine";
+
+export const ADMIN_PROFILE_SHOWN_TABLE = "adminProfileShownTable";
 
 
 export const clearLocalStorage = () => localStorage.clear()
@@ -71,6 +74,9 @@ export const removeEditUserRole = () => removeItem(EDIT_USER_ROLE)
 export const getCurrentEmployee = () => getObject(CURRENT_EMPLOYEE)
 export const setCurrentEmployee = value => setObject(CURRENT_EMPLOYEE, value)
 
+export const getCurrentAdmin = () => getObject(CURRENT_ADMIN)
+export const setCurrentAdmin = value => setObject(CURRENT_ADMIN, value)
+
 export const getEditMedicineId = () => getItem(EDIT_MEDICINE_ID)
 export const setEditMedicineId = value => setItem(EDIT_MEDICINE_ID, value)
 
@@ -94,3 +100,6 @@ export const setCurrentMeetingRoom = value => setObject(CURRENT_MEETING_ROOM, va
 
 export const getCurrentMedicine = () => getObject(CURRENT_MEDICINE)
 export const setCurrentMedicine = value => setObject(CURRENT_MEDICINE, value)
+
+export const getAdminProfileShownTable = () => getItem(ADMIN_PROFILE_SHOWN_TABLE)
+export const setAdminProfileShownTable = value => setItem(ADMIN_PROFILE_SHOWN_TABLE, value)

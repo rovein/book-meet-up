@@ -5,7 +5,14 @@ import DefaultLoader from "../../ui/Loader";
 import DataTableComponent from "../../ui/DataTable";
 import {FIELDS} from "./AddEditOfficeBuildingFormConfig";
 import getEntityColumns from "../../util/TableUtil";
-import {setCurrentOfficeBuilding, setCurrentOfficeBuildingId, setEditOfficeBuildingId} from "../../util/LocalStorageUtils";
+import {
+    getCurrentUserRole,
+    setCurrentOfficeBuilding,
+    setCurrentOfficeBuildingId,
+    setEditOfficeBuildingId
+} from "../../util/LocalStorageUtils";
+import {ADMIN} from "../../util/Constants";
+import {formatOfficeBuildingData} from "../../util/DataFormattingUtil";
 
 function OfficeBuildingsTable() {
     const [data, setData] = useState([])
@@ -15,7 +22,7 @@ function OfficeBuildingsTable() {
         axios.get(`/office-buildings`)
             .then(result => {
                 const data = result.data
-                setData(data)
+                setData(data.map(formatOfficeBuildingData))
                 setIsLoaded(true)
             })
     }, [])
@@ -39,23 +46,27 @@ function OfficeBuildingsTable() {
             "onClick": goToMeetingRoomsPage,
             "className": "btn",
             "onClickPassParameter": "id"
-        },
-        {
-            "name": "Edit",
-            "onClick": editEntity,
-            "className": "btn btn-danger-warning",
-            "onClickPassParameter": "id"
-        },
-        {
-            "name": "Delete",
-            "className": "btn btn-danger",
-            "onClickPassParameter": "id",
-            "url": "/office-buildings/{id}",
         }
     ]
 
+    if (getCurrentUserRole() === ADMIN) {
+        operations.push({
+                "name": "Edit",
+                "onClick": editEntity,
+                "className": "btn btn-danger-warning",
+                "onClickPassParameter": "id"
+            },
+            {
+                "name": "Delete",
+                "className": "btn btn-danger",
+                "onClickPassParameter": "id",
+                "url": "/office-buildings/{id}",
+            });
+    }
+
     if (!isLoaded) return <DefaultLoader height={325} width={325}/>;
-    return <DataTableComponent displayData={data} displayColumns={columns} operations={operations} />
+    return <DataTableComponent displayData={data} displayColumns={columns} operations={operations}
+                               tableName={"OfficeBuildings"}/>
 }
 
 export default withTranslation()(OfficeBuildingsTable);

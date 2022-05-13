@@ -1,17 +1,16 @@
 import React from 'react'
 import Header from '../../ui/Header'
-import SignUpTabBar from '../../auth/SignUpTabBar';
-import {clearLocalStorage, getCurrentLanguage, setCurrentLanguage} from "../../util/LocalStorageUtils";
+import {getCurrentLanguage, setCurrentLanguage} from "../../util/LocalStorageUtils";
+import SignUpForm from "../../auth/SignUpForm";
 
 function SignUp() {
     const language = getCurrentLanguage();
-    clearLocalStorage();
     setCurrentLanguage(language);
     return (
-        <div className="signIn">
+        <div className="profile">
             <Header/>
             <div className="container">
-                <SignUpTabBar/>
+                <SignUpForm/>
             </div>
         </div>
     )

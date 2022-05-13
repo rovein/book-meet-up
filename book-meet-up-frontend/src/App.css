@@ -166,6 +166,7 @@ button:focus {
   margin: 0 0 10px 25%;
   border: 1px solid;
 }
+
 #cName {
   font-size: 36px;
   color: #fbfbfb;
@@ -176,6 +177,10 @@ button:focus {
   cursor: default;
   color: #f4f4f4;
   margin: 10px 0 10px 20%;
+}
+
+.profile_back button {
+  margin: 11px 0 10px 0;
 }
 
 .rooms_back {
@@ -361,7 +366,7 @@ input[type="checkbox"].switch:checked + div > div {
 }
 
 hr {
-  background-color: black;
+  border-color: black;
 }
 
 .border-red {

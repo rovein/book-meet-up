@@ -8,7 +8,7 @@ import _ from "lodash";
 import {confirmAlert} from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-function Table({columns, data, operations}) {
+function Table({columns, data, operations, tableName}) {
     const [isLoaded, setIsLoaded] = useState(true)
 
     const {t} = useTranslation();
@@ -50,45 +50,51 @@ function Table({columns, data, operations}) {
      */
     if (!isLoaded) return <DefaultLoader height={325} width={325}/>;
     return (
-        <div className="grid">
-            {
-                data.map(element => {
-                    return (
-                        <div className="card text-center">
-                            <div className="crd-body text-dark">
-                                <h2 className="card-title">ID: {element.id}</h2>
-                                <hr/>
-                                {columns.map(column => {
-                                    return (
-                                        <p className="card-text text-secondary">
-                                            {t(column.Header)}: {element[column.accessor]}
-                                        </p>
-                                    )
-                                })}
-                                {operations.map(operation => {
-                                    return (<Button
-                                        className={operation.className}
-                                        text={t(operation.name)}
-                                        onClick={() => {
-                                            if (operation.name === 'Delete') {
-                                                handleDeleteOperation(operation.url,
-                                                    element[operation.onClickPassParameter], operation.onClick)
-                                            } else {
-                                                operation.onClick(element[operation.onClickPassParameter])
-                                            }
-                                        }}
-                                    />)
-                                })}
+        <div>
+            <div className="rooms_back">
+                <p>{t(tableName)}</p>
+            </div>
+            <div className="grid">
+                {
+                    data.map(element => {
+                        return (
+                            <div className="card text-center">
+                                <div className="crd-body text-dark">
+                                    <h2 className="card-title">{element.displayTitle}</h2>
+                                    <hr/>
+                                    {columns.map(column => {
+                                        const style = element[column.applyCustomStyle];
+                                        return (
+                                            <p className={`card-text text-secondary ${style}`}>
+                                                {column.Header ? t(column.Header) + ': ' : ''}{column.insertBreak && <br/>}{element[column.accessor]}
+                                            </p>
+                                        )
+                                    })}
+                                    {operations.map(operation => {
+                                        return (<Button
+                                            className={operation.className}
+                                            text={t(operation.name)}
+                                            onClick={() => {
+                                                if (operation.name === 'Delete') {
+                                                    handleDeleteOperation(operation.url,
+                                                        element[operation.onClickPassParameter], operation.onClick)
+                                                } else {
+                                                    operation.onClick(element[operation.onClickPassParameter])
+                                                }
+                                            }}
+                                        />)
+                                    })}
+                                </div>
                             </div>
-                        </div>
-                    )
-                })
-            }
+                        )
+                    })
+                }
+            </div>
         </div>
     )
 }
 
-function DataTableComponent({displayData, displayColumns, operations}) {
+function DataTableComponent({displayData, displayColumns, operations, tableName}) {
     const sortedData = displayData.sort((current, next) => {
         return current.id - next.id
     })
@@ -124,7 +130,7 @@ function DataTableComponent({displayData, displayColumns, operations}) {
     }, [])
 
     return (
-        <Table columns={columns} data={data} operations={operations}/>
+        <Table columns={columns} data={data} operations={operations} tableName={tableName}/>
     )
 }
 
