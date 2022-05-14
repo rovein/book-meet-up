@@ -74,7 +74,7 @@ function AdminEmployeesTable() {
     ]
     if (!isLoaded) return <DefaultLoader isCentered={true} height={425} width={425}/>;
     return <DataTableComponent displayData={employees} displayColumns={columns} operations={operations}
-                               tableName={"Employees"}/>;
+                               tableName={"Employees"} addEntityUrl={'/signup'}/>;
 }
 
 export default withTranslation()(AdminEmployeesTable);

@@ -1,14 +1,16 @@
 import React from 'react'
 import Header from '../../ui/Header'
-import {getCurrentLanguage, setCurrentLanguage} from "../../util/LocalStorageUtils";
+import {getCurrentLanguage, getCurrentUserRole, setCurrentLanguage} from "../../util/LocalStorageUtils";
 import SignUpForm from "../../auth/SignUpForm";
+import HeaderAuth from "../../auth/HeaderAuth";
+import {ADMIN} from "../../util/Constants";
 
 function SignUp() {
     const language = getCurrentLanguage();
     setCurrentLanguage(language);
     return (
         <div className="profile">
-            <Header/>
+            {getCurrentUserRole() === ADMIN ? <HeaderAuth/> : <Header/>}
             <div className="container">
                 <SignUpForm/>
             </div>
