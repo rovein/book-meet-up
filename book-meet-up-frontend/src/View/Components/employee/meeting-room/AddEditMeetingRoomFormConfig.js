@@ -2,21 +2,21 @@ export const FIELDS = [
     {
         label: 'FMeetingRoomNumber',
         inputType: 'text',
-        name: 'type',
+        name: 'number',
         pattern: /^([А-Яа-яё0-9]+)|([A-Za-z0-9]+)$/i,
         error: 'EMeetingRoomNumber'
     },
     {
         label: 'FMeetingRoomFloor',
         inputType: 'number',
-        name: 'amount',
+        name: 'floor',
         pattern: /^-?\d+\.?\d*$/,
         error: 'EMeetingRoomFloor'
     },
     {
         label: 'FMeetingRoomInfo',
         inputType: 'text',
-        name: 'type',
+        name: 'info',
         pattern: /^([А-Яа-яё0-9]+)|([A-Za-z0-9]+)$/i,
         error: 'EMeetingRoomInfo'
     }

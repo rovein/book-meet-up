@@ -6,9 +6,7 @@ function EditMeetingRoom() {
     return (
         <div className="signIn">
             <Header/>
-            <div className="container">
-                <EditMeetingRoomForm/>
-            </div>
+            <EditMeetingRoomForm/>
         </div>
     )
 }

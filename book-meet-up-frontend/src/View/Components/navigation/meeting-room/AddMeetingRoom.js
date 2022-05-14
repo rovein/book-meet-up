@@ -6,9 +6,7 @@ function AddMeetingRoom() {
     return (
         <div className="signIn">
             <Header/>
-            <div className="container">
-                <AddMeetingRoomForm/>
-            </div>
+            <AddMeetingRoomForm/>
         </div>
     )
 }

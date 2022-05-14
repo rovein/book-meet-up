@@ -54,7 +54,8 @@ function AddEditEntityForm({requestPayload, fields, formName}) {
                                        required: true,
                                        pattern: field.pattern
                                    })} />
-                            {errors[field.name] && <small style={{fontSize: "17px", position: "static"}} className="w3-text-red">{t(field.error)}</small>}
+                            {errors[field.name] && <small style={{fontSize: "17px", position: "static"}}
+                                                          className="w3-text-red">{t(field.error)}</small>}
                         </div>
                     )
                 }
