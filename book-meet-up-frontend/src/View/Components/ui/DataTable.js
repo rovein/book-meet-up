@@ -7,6 +7,8 @@ import DefaultLoader from "./Loader";
 import _ from "lodash";
 import {confirmAlert} from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import {ADMIN} from "../util/Constants";
+import {getCurrentUserRole} from "../util/LocalStorageUtils";
 
 function Table({columns, data, operations, tableName, addEntityUrl}) {
     const [isLoaded, setIsLoaded] = useState(true)
@@ -59,10 +61,10 @@ function Table({columns, data, operations, tableName, addEntityUrl}) {
         <div>
             <div className="rooms_back">
                 <p>{t(tableName)}</p>
-                <Button
+                {getCurrentUserRole() === ADMIN && <Button
                     text={t("Add")}
                     onClick={_ => window.location.href = addEntityUrl}
-                />
+                />}
             </div>
             <div className="grid">
                 {

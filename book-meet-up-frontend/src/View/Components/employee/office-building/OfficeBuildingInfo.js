@@ -26,7 +26,7 @@ function OfficeBuildingInfo() {
     return (
         <div>
             <div className="profile_back">
-                {isEmployee() && <p className={'entityName'}>{user.firstName + user.lastName}</p>}
+                {isEmployee() && <p className={'entityName'}>{user.firstName + ' ' + user.lastName}</p>}
                 {isAdmin() && <p className={'entityName'}>{t("Admin")}</p>}
                 <p className={'entityName'}>{t("OfficeBuilding") + ' ' + officeBuilding.name}</p>
 
