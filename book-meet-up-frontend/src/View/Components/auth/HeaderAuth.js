@@ -36,7 +36,6 @@ function Header(props) {
                         <li><a href="/create-booking">{t('CreateBooking')}</a></li>
                     </>}
                     {getCurrentUserRole() === ADMIN && <>
-                        <li><a id="BC">{t("Backup")}</a></li>
                     </>}
                     <li><a onClick={signOut} id="SO">{t("Signout")}</a></li>
                 </ul>
