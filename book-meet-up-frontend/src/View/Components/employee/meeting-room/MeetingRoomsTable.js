@@ -27,7 +27,10 @@ function MeetingRoomsTable() {
             })
     }, [])
 
-    const columns = React.useMemo(() => [], [])
+    const columns = React.useMemo(() => [{
+        Header: "FMeetingRoomFloor",
+        accessor: 'floor'
+    }], [])
 
     const {t} = useTranslation();
 

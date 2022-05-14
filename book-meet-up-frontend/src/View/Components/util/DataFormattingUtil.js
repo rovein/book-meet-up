@@ -19,7 +19,7 @@ export const formatOfficeBuildingData = officeBuilding => {
 }
 
 export const formatMeetingRoomsData = meetingRoom => {
-    meetingRoom.displayTitle = "№ " + meetingRoom.number + ' (' + meetingRoom.floor + ')';
+    meetingRoom.displayTitle = "№ " + meetingRoom.number;
     return meetingRoom;
 }
 
