@@ -8,7 +8,7 @@ import _ from "lodash";
 import {confirmAlert} from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
-function Table({columns, data, operations, tableName}) {
+function Table({columns, data, operations, tableName, addEntityUrl}) {
     const [isLoaded, setIsLoaded] = useState(true)
 
     const {t} = useTranslation();
@@ -37,22 +37,32 @@ function Table({columns, data, operations, tableName}) {
             .then(_ => {
                 deleteCallback(id)
                 setIsLoaded(true)
-            }).catch(e => {
-            alert(e)
-        })
+            })
+            .catch(e => {
+                confirmAlert({
+                    title: t("Error"),
+                    message: t("DeleteErrorMessage"),
+                    buttons: [
+                        {
+                            label: t("Ok")
+                        }
+                    ],
+                    closeOnEscape: true,
+                    closeOnClickOutside: true,
+                });
+                setIsLoaded(true)
+            })
     }
 
-    /* columns:
-         Header: 'Temp',
-         accessor: 'temperature',
-         toTranslate: true,
-         applyCustomStyle: "conditionsStyle"
-     */
     if (!isLoaded) return <DefaultLoader height={325} width={325}/>;
     return (
         <div>
             <div className="rooms_back">
                 <p>{t(tableName)}</p>
+                <Button
+                    text={t("Add")}
+                    onClick={_ => window.location.href = addEntityUrl}
+                />
             </div>
             <div className="grid">
                 {
@@ -63,10 +73,12 @@ function Table({columns, data, operations, tableName}) {
                                     <h2 className="card-title">{element.displayTitle}</h2>
                                     <hr/>
                                     {columns.map(column => {
+                                        if (column.isHidden) return;
                                         const style = element[column.applyCustomStyle];
                                         return (
                                             <p className={`card-text text-secondary ${style}`}>
-                                                {column.Header ? t(column.Header) + ': ' : ''}{column.insertBreak && <br/>}{element[column.accessor]}
+                                                {column.Header ? t(column.Header) + ': ' : ''}{column.insertBreak &&
+                                                <br/>}{element[column.accessor]}
                                             </p>
                                         )
                                     })}
@@ -94,7 +106,7 @@ function Table({columns, data, operations, tableName}) {
     )
 }
 
-function DataTableComponent({displayData, displayColumns, operations, tableName}) {
+function DataTableComponent({displayData, displayColumns, operations, tableName, addEntityUrl}) {
     const sortedData = displayData.sort((current, next) => {
         return current.id - next.id
     })
@@ -130,7 +142,7 @@ function DataTableComponent({displayData, displayColumns, operations, tableName}
     }, [])
 
     return (
-        <Table columns={columns} data={data} operations={operations} tableName={tableName}/>
+        <Table columns={columns} data={data} operations={operations} tableName={tableName} addEntityUrl={addEntityUrl}/>
     )
 }
 

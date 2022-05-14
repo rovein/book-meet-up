@@ -27,7 +27,12 @@ function OfficeBuildingsTable() {
             })
     }, [])
 
-    const columns = React.useMemo(() => getEntityColumns(FIELDS, false), [])
+    const columns = React.useMemo(() => {
+        const columns = getEntityColumns(FIELDS, false)
+        const nameIndex = columns.findIndex(column => column.accessor === 'name');
+        columns[nameIndex].isHidden = true;
+        return columns;
+    }, [])
 
     function editEntity(id) {
         setEditOfficeBuildingId(id);
@@ -60,13 +65,13 @@ function OfficeBuildingsTable() {
                 "name": "Delete",
                 "className": "btn btn-danger",
                 "onClickPassParameter": "id",
-                "url": "/office-buildings/{id}",
+                "url": "office-buildings/{id}",
             });
     }
 
-    if (!isLoaded) return <DefaultLoader height={325} width={325}/>;
+    if (!isLoaded) return <DefaultLoader height={425} width={425}/>;
     return <DataTableComponent displayData={data} displayColumns={columns} operations={operations}
-                               tableName={"OfficeBuildings"}/>
+                               tableName={"OfficeBuildings"} addEntityUrl={"./add-office-building"}/>
 }
 
 export default withTranslation()(OfficeBuildingsTable);

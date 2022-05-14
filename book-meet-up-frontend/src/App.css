@@ -173,7 +173,7 @@ button:focus {
   font-weight: bold;
 }
 .profile_back p {
-  font-size: 18px;
+  font-size: 22px;
   cursor: default;
   color: #f4f4f4;
   margin: 10px 0 10px 20%;
@@ -333,7 +333,7 @@ input[type="checkbox"].switch:checked + div > div {
 
 .centered {
   margin-top: 1%;
-  margin-left: 42%;
+  margin-left: 40%;
 }
 
 .centered-no-storages {
@@ -373,3 +373,12 @@ hr {
   border: 2px solid red;
 }
 
+.entityName {
+  font-size: 36px;
+  /*color: #fbfbfb;*/
+  font-weight: bold;
+}
+
+.btn-info {
+  background-color: deepskyblue;
+}

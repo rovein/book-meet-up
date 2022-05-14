@@ -18,7 +18,7 @@ function EditOfficeBuildingForm() {
             )
     }, [])
 
-    if (!isLoaded) return <DefaultLoader height={400} width={425} isCentered={false}/>;
+    if (!isLoaded) return <DefaultLoader height={400} width={425} isCentered={true}/>;
     return <div className="container">
         <AddEditEntityForm requestPayload={{
             function: axios.put,

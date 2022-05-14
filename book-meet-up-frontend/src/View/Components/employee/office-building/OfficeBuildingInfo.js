@@ -1,27 +1,43 @@
 import {useTranslation, withTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
 import MeetingRoomsTable from "../meeting-room/MeetingRoomsTable";
-import {getCurrentOfficeBuilding, getCurrentEmployee} from "../../util/LocalStorageUtils";
+import {
+    getCurrentOfficeBuilding,
+    getCurrentEmployee,
+    getCurrentUserRole,
+    getCurrentAdmin
+} from "../../util/LocalStorageUtils";
+import {ADMIN, EMPLOYEE} from "../../util/Constants";
 
 function OfficeBuildingInfo() {
     const [user, setUser] = useState({})
     const [officeBuilding, setOfficeBuilding] = useState({})
+    const currentUserRole = getCurrentUserRole();
 
     useEffect(() => {
-        setUser(getCurrentEmployee());
-        setOfficeBuilding(getCurrentOfficeBuilding())
+        setUser(isAdmin() ? getCurrentAdmin : getCurrentEmployee());
+        setOfficeBuilding(getCurrentOfficeBuilding());
     }, [])
+
+    const isAdmin = () => currentUserRole === ADMIN;
+    const isEmployee = () => currentUserRole === EMPLOYEE;
 
     const {t} = useTranslation();
     return (
         <div>
-            <div className="w3-light-grey w3-text-black w3-border w3-border-black profile_back">
-                <p className={'entityName'}>{user.name}</p>
-                <p className={'entityName'}>{t("OfficeBuilding") + ' № ' + officeBuilding.id}</p>
-                <p>{t("Email")}: {user.email}</p>
+            <div className="profile_back">
+                {isEmployee() && <p className={'entityName'}>{user.firstName + user.lastName}</p>}
+                {isAdmin() && <p className={'entityName'}>{t("Admin")}</p>}
+                <p className={'entityName'}>{t("OfficeBuilding") + ' ' + officeBuilding.name}</p>
+
+                {isEmployee() && <p>{t("Email")}: {user.email}</p>}
+                {isAdmin() && <p>{user.firstName + ' ' + user.lastName}</p>}
                 <p>{t("FCity")}: {officeBuilding.city}</p>
-                <p>{t("Phone")}: {user.phoneNumber}</p>
+
+                {isEmployee() && <p>{t("Phone")}: {user.phoneNumber}</p>}
+                {isAdmin() && <p>{t("Email")}: {user.email}</p>}
                 <p>{t("FStreet")}: {officeBuilding.street}</p>
+
                 <p></p>
                 <p>{t("FHouse")}: {officeBuilding.house}</p>
             </div>

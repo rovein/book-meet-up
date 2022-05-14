@@ -6,9 +6,7 @@ function EditOfficeBuilding() {
     return (
         <div className="signIn">
             <Header/>
-            <div className="container">
-                <EditOfficeBuildingForm/>
-            </div>
+            <EditOfficeBuildingForm/>
         </div>
     )
 }
