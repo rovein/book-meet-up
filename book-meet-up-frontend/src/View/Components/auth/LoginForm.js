@@ -48,7 +48,7 @@ function LoginForm() {
             <div className='signInContainer'>
                 <h1 className={"w3-center"}>{t("Login")}</h1>
 
-                {error && <p className="text-danger">{t(error)}</p>}
+                {error && <p className="w3-center text-danger">{t(error)}</p>}
 
                 <input type={"text"} className={errors["email"] ? errorInputClass : inputClass}
                        placeholder={t('Email')}
@@ -56,7 +56,7 @@ function LoginForm() {
                            required: true,
                            pattern: /^([a-z0-9_-]+.)*[a-z0-9_-]+@[a-z0-9_-]+(.[a-z0-9_-]+)*.[a-z]{2,6}$/
                        })} />
-                {errors["email"] && <div><small className="w3-text-red">{t("EEmail")}</small><br/></div>}
+                {errors["email"] && <><small className="w3-text-red">{t("EEmail")}</small><br/></>}
 
                 <input type={"password"} className={errors["password"] ? errorInputClass : inputClass}
                        placeholder={t('Password')}
@@ -64,7 +64,7 @@ function LoginForm() {
                            required: true,
                            pattern: /^.{8,20}$/
                        })} />
-                {errors["password"] && <div><small className="w3-text-red">{t("EPass")}</small><br/></div>}
+                {errors["password"] && <><small className="w3-text-red">{t("EPass")}</small><br/></>}
 
                 <Button text={t('Signin')} type="submit"/>
             </div>
