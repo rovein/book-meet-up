@@ -3,8 +3,7 @@ import {useTranslation, withTranslation} from 'react-i18next'
 import * as Constants from "../util/Constants";
 import DefaultLoader from "../ui/Loader";
 import {authInstance} from "../util/ApiUtil";
-import {OFFICE_BUILDINGS} from "../util/Constants";
-import {setProfileShownTable, setToken, setTokenValues} from "../util/LocalStorageUtils";
+import {setCurrentEmployeeId, setToken, setTokenValues} from "../util/LocalStorageUtils";
 import _ from "lodash";
 import {useForm} from "react-hook-form";
 import Button from "../ui/Button";
@@ -18,7 +17,6 @@ function LoginForm() {
         const token = result.data.token;
         setToken(token);
         setTokenValues(token);
-        setProfileShownTable(OFFICE_BUILDINGS);
         window.location.href = './profile';
     }
 

@@ -85,7 +85,11 @@ i18n.use(LanguageDetector).init({
                 MeetingRooms: "Meeting Rooms",
                 Bookings: "Bookings",
                 EditMeetingRoom: "Edit meeting room",
-                Info: "Info"
+                Info: "Info",
+                MeetingRoom: "Meeting Room",
+                Invite: "Invite",
+                Duration: "Duration",
+                MyBookings: "My bookings"
             }
         },
         UA: {
@@ -166,7 +170,11 @@ i18n.use(LanguageDetector).init({
                 MeetingRooms: "Кімнати для переговорів",
                 Bookings: "Бронювання",
                 EditMeetingRoom: "Редагувати приміщення для переговорів",
-                Info: "Інформація"
+                Info: "Інформація",
+                MeetingRoom: "Кімната для переговорів",
+                Invite: "Запросити",
+                Duration: "Тривалість",
+                MyBookings: "Мої бронювання"
             }
         },
     },

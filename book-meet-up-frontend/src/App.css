@@ -382,3 +382,7 @@ hr {
 .btn-info {
   background-color: deepskyblue;
 }
+
+.text-bold {
+  font-weight: bold;
+}

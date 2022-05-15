@@ -4,7 +4,7 @@ import axios from "../../util/ApiUtil";
 import DefaultLoader from "../../ui/Loader";
 import DataTableComponent from "../../ui/DataTable";
 import {FIELDS} from "./AddEditOfficeBuildingFormConfig";
-import getEntityColumns from "../../util/TableUtil";
+import getEntityColumns, {sortById} from "../../util/TableUtil";
 import {
     getCurrentUserRole,
     setCurrentOfficeBuilding,
@@ -71,7 +71,7 @@ function OfficeBuildingsTable() {
 
     if (!isLoaded) return <DefaultLoader height={425} width={425}/>;
     return <DataTableComponent displayData={data} displayColumns={columns} operations={operations}
-                               tableName={"OfficeBuildings"} addEntityUrl={"./add-office-building"}/>
+                               tableName={"OfficeBuildings"} addEntityUrl={"./add-office-building"} sorter={sortById}/>
 }
 
 export default withTranslation()(OfficeBuildingsTable);

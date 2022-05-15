@@ -6,6 +6,7 @@ import {setEditUserEmail, setEditUserRole} from "../util/LocalStorageUtils";
 import {EMPLOYEE} from "../util/Constants";
 import {formatEmployeeData} from "../util/DataFormattingUtil";
 import DataTableComponent from "../ui/DataTable";
+import {sortById} from "../util/TableUtil";
 
 function AdminEmployeesTable() {
 
@@ -74,7 +75,7 @@ function AdminEmployeesTable() {
     ]
     if (!isLoaded) return <DefaultLoader isCentered={true} height={425} width={425}/>;
     return <DataTableComponent displayData={employees} displayColumns={columns} operations={operations}
-                               tableName={"Employees"} addEntityUrl={'/signup'}/>;
+                               tableName={"Employees"} addEntityUrl={'/signup'} sorter={sortById}/>;
 }
 
 export default withTranslation()(AdminEmployeesTable);

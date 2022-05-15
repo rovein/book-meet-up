@@ -1,4 +1,5 @@
 import React from "react";
+import Moment from "moment";
 
 export const formatEmployeeData = employee => {
     const activatedAccount = "accIsActive"
@@ -21,6 +22,14 @@ export const formatOfficeBuildingData = officeBuilding => {
 export const formatMeetingRoomsData = meetingRoom => {
     meetingRoom.displayTitle = "№ " + meetingRoom.number;
     return meetingRoom;
+}
+
+export const formatBookingData = booking => {
+    const dateTime = booking.date + 'T' + booking.time
+    booking.displayTitle = Moment(dateTime).format('DD.MM.YYYY HH:mm')
+    booking.duration = booking.duration + " min."
+    booking.statusStyle = 'text-bold'
+    return booking;
 }
 
 export const sortById = data => {

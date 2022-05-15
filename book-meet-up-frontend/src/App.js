@@ -17,6 +17,8 @@ import EditMeetingRoom from './View/Components/navigation/meeting-room/EditMeeti
 import AddOfficeBuilding from "./View/Components/navigation/office-building/AddOfficeBuilding";
 import EditOfficeBuilding from "./View/Components/navigation/office-building/EditOfficeBuilding";
 import OfficeBuildingInfoPage from "./View/Components/navigation/office-building/OfficeBuildingInfoPage";
+import BookingInfoPage from "./View/Components/navigation/booking/BookingInfoPage";
+import CreateBooking from "./View/Components/navigation/booking/CreateBooking";
 
 class App extends React.Component {
     constructor(props) {
@@ -44,9 +46,9 @@ class App extends React.Component {
                         <Route path='/edit-meeting-room' component={EditMeetingRoom}/>
                         <Route path='/office-building-info' component={OfficeBuildingInfoPage}/>
 
-                        <Route path={'/bookings/:getBy/:id'} children={AddMeetingRoom}/>
+                        <Route path={'/bookings/:getBy/:id'} children={BookingInfoPage}/>
 
-                        <Route path={'/create-booking'} component={AddMeetingRoom}/>
+                        <Route path={'/create-booking'} component={CreateBooking}/>
                         <Redirect from='/' to='/login'/>
                     </Switch>
                 </BrowserRouter>

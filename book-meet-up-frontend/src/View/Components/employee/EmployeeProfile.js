@@ -6,9 +6,8 @@ import {
     checkToken,
     getCurrentEmployee,
     getCurrentUserEmail,
-    setCurrentEmployee
+    setCurrentEmployee, setCurrentEmployeeId
 } from "../util/LocalStorageUtils";
-import MeetingRoomsTable from "./meeting-room/MeetingRoomsTable";
 import OfficeBuildingsTable from "./office-building/OfficeBuildingsTable";
 
 function Profile() {
@@ -30,6 +29,7 @@ function Profile() {
         axios.get(`/employees/${getCurrentUserEmail()}`).then(result => {
                 setEmployee(result.data);
                 setCurrentEmployee(result.data);
+                setCurrentEmployeeId(result.data.id);
             }
         )
     }, [])

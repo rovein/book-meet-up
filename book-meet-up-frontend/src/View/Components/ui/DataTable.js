@@ -108,10 +108,8 @@ function Table({columns, data, operations, tableName, addEntityUrl}) {
     )
 }
 
-function DataTableComponent({displayData, displayColumns, operations, tableName, addEntityUrl}) {
-    const sortedData = displayData.sort((current, next) => {
-        return current.id - next.id
-    })
+function DataTableComponent({displayData, displayColumns, operations, tableName, addEntityUrl, sorter}) {
+    const sortedData = displayData.sort(sorter)
     const [data, setData] = useState(sortedData)
     const columns = React.useMemo(() => [...displayColumns], [])
     const translateColumns = columns.filter(column => column.toTranslate).map(column => column.accessor)

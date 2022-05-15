@@ -7,12 +7,12 @@ import {
     getCurrentOfficeBuildingId,
     getCurrentUserRole,
     setCurrentMeetingRoom,
-    setCurrentMeetingRoomId,
     setEditMeetingRoomId
 } from "../../util/LocalStorageUtils";
 import {ADMIN} from "../../util/Constants";
 import {formatMeetingRoomsData} from "../../util/DataFormattingUtil";
-import {confirmAlert} from "react-confirm-alert";
+import {showMeetingRoomInfo} from "../../util/AlertUtil";
+import {sortById} from "../../util/TableUtil";
 
 function MeetingRoomsTable() {
     const [data, setData] = useState([])
@@ -34,22 +34,7 @@ function MeetingRoomsTable() {
 
     const {t} = useTranslation();
 
-    function showMeetingRoomInfo(info) {
-        confirmAlert({
-            title: t("Info"),
-            message: info,
-            buttons: [
-                {
-                    label: t("Ok")
-                }
-            ],
-            closeOnEscape: true,
-            closeOnClickOutside: true,
-        });
-    }
-
     function goToBookingsPage(id) {
-        setCurrentMeetingRoomId(id)
         setCurrentMeetingRoom(data.find(meetingRoom => meetingRoom.id === id));
         window.location.href = `./bookings/by-meeting-room/${id}`;
     }
@@ -61,7 +46,7 @@ function MeetingRoomsTable() {
 
     const operations = [{
         "name": "Info",
-        "onClick": showMeetingRoomInfo,
+        "onClick": showMeetingRoomInfo(t),
         "className": "btn btn-info",
         "onClickPassParameter": "info"
     }]
@@ -89,7 +74,7 @@ function MeetingRoomsTable() {
 
     if (!isLoaded) return <DefaultLoader height={325} width={325}/>;
     return <DataTableComponent displayData={data} displayColumns={columns} operations={operations}
-                               tableName={"MeetingRooms"} addEntityUrl={"./add-meeting-room"}/>
+                               tableName={"MeetingRooms"} addEntityUrl={"./add-meeting-room"} sorter={sortById}/>
 }
 
 export default withTranslation()(MeetingRoomsTable);
