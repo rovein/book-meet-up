@@ -17,7 +17,7 @@ public interface BookingRepository extends CrudRepository<Booking, Long> {
     String ROOM_IS = "mr.meeting_room_id = ?1";
     String BOOKING_IS = "bk.booking_id = ?1";
     String AND = " AND ";
-    String IS_MEETING_UPCOMING = "bk.date + bk.time > NOW()";
+    String IS_MEETING_UPCOMING = "bk.status IN ('CREATED', 'IN_PROGRESS')";
 
     String SELECT_STORAGE_INFO = "SELECT bk.booking_id as id, bk.date, bk.time, bk.duration, bk.status, "
             + "bk.meeting_room_id as meetingRoomId, mr.number, mr.floor, mr.info, "

@@ -47,14 +47,14 @@ public class BookingController {
     @GetMapping("/employee/{id}")
     @ApiOperation(value = "Finds all bookings for provided employee", nickname = "getAllBookingsByEmployee")
     public ResponseEntity<?> getAllBookingsByEmployee(@PathVariable Long id,
-                                                      @RequestParam(defaultValue = "true") Boolean isUpcoming) {
+                                                      @RequestParam(defaultValue = "false") Boolean isUpcoming) {
         return ResponseEntity.ok(bookingService.getAllBookingsByEmployee(id, isUpcoming));
     }
 
     @GetMapping("/meeting-room/{id}")
     @ApiOperation(value = "Finds all bookings for provided meeting room", nickname = "getAllBookingsByMeetingRoom")
     public ResponseEntity<?> getAllBookingsByMeetingRoom(@PathVariable Long id,
-                                                         @RequestParam(defaultValue = "true") Boolean isUpcoming) {
+                                                         @RequestParam(defaultValue = "false") Boolean isUpcoming) {
         return ResponseEntity.ok(bookingService.getAllBookingsByMeetingRoom(id, isUpcoming));
     }
 
