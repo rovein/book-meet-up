@@ -38,7 +38,9 @@ function Profile() {
     return (
         <div className="profile">
             <div className="profile_back">
-                <p className={'entityName'}>{employee.firstName + ' ' + employee.lastName}</p>
+                {(employee.firstName && employee.lastName) ?
+                    <p className={'entityName'}>{employee.firstName + ' ' + employee.lastName}</p> :
+                    <p></p>}
                 <p></p>
                 <p>{t("Email")}: {employee.email}</p>
                 <p></p>
