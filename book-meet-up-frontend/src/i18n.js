@@ -89,7 +89,12 @@ i18n.use(LanguageDetector).init({
                 MeetingRoom: "Meeting Room",
                 Invite: "Invite",
                 Duration: "Duration",
-                MyBookings: "My bookings"
+                MyBookings: "My bookings",
+                SendInvitationHeader: "Send invitation",
+                SendInvitationText: "Enter comma-separated emails to send them an invitation.",
+                InvitationWasSent: "Invitation was successfully sent.",
+                ToInvite: "Invite",
+                GetBack: "Back"
             }
         },
         UA: {
@@ -174,7 +179,12 @@ i18n.use(LanguageDetector).init({
                 MeetingRoom: "Кімната для переговорів",
                 Invite: "Запросити",
                 Duration: "Тривалість",
-                MyBookings: "Мої бронювання"
+                MyBookings: "Мої бронювання",
+                SendInvitationHeader: "Надіслати запрошення",
+                SendInvitationText: "Введіть список електронних адрес через кому для надіслання запрошення.",
+                InvitationWasSent: "Запрошення було успішно вислано.",
+                ToInvite: "Запросити",
+                GetBack: "Назад"
             }
         },
     },
