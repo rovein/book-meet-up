@@ -4,7 +4,6 @@ import axios from "../../util/ApiUtil";
 import DefaultLoader from "../../ui/Loader";
 import DataTableComponent from "../../ui/DataTable";
 import {
-    getCurrentOfficeBuildingId,
     getCurrentUserRole,
     setCurrentMeetingRoom,
     setEditMeetingRoomId
@@ -14,12 +13,12 @@ import {formatMeetingRoomsData} from "../../util/DataFormattingUtil";
 import {showMeetingRoomInfo} from "../../util/AlertUtil";
 import {sortById} from "../../util/TableUtil";
 
-function MeetingRoomsTable() {
+function MeetingRoomsTable({retrieveUrl, additionalOperations}) {
     const [data, setData] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
-        axios.get(`/office-buildings/${getCurrentOfficeBuildingId()}/meeting-rooms`)
+        axios.get(retrieveUrl)
             .then(result => {
                 const data = result.data;
                 setData(data.map(formatMeetingRoomsData))
@@ -50,6 +49,10 @@ function MeetingRoomsTable() {
         "className": "btn btn-info",
         "onClickPassParameter": "info"
     }]
+
+    if (additionalOperations) {
+        additionalOperations.forEach(operation => operations.push(operation))
+    }
 
     if (getCurrentUserRole() === ADMIN) {
         operations.push({

@@ -1,6 +1,5 @@
 import {useTranslation, withTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
-import MeetingRoomsTable from "../meeting-room/MeetingRoomsTable";
 import {
     getCurrentOfficeBuilding,
     getCurrentEmployee,
@@ -8,6 +7,7 @@ import {
     getCurrentAdmin
 } from "../../util/LocalStorageUtils";
 import {ADMIN, EMPLOYEE} from "../../util/Constants";
+import MeetingRoomsByOffice from "../meeting-room/MeetingRoomsByOffice";
 
 function OfficeBuildingInfo() {
     const [user, setUser] = useState({})
@@ -42,7 +42,7 @@ function OfficeBuildingInfo() {
                 <p>{t("FHouse")}: {officeBuilding.house}</p>
             </div>
             <div>
-                <MeetingRoomsTable/>
+                <MeetingRoomsByOffice/>
             </div>
         </div>
     )

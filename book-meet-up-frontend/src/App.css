@@ -73,12 +73,12 @@ input {
 }
 
 .entity-form-border {
-  border: 3px solid #54A161;
+  border: 3px solid black;
 }
 
 .signInForm,
 .signUpForm h1 {
-  color: #3fb545;
+  color: black;
 }
 
 .signInContainer,
@@ -385,4 +385,9 @@ hr {
 
 .text-bold {
   font-weight: bold;
+}
+
+.react-datepicker-wrapper {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
