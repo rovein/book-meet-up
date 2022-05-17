@@ -48,7 +48,8 @@ public class EmailNotificationSender {
                         officeBuilding.getName(),
                         officeBuilding.getCity(),
                         officeBuilding.getStreet(),
-                        officeBuilding.getHouse()
+                        officeBuilding.getHouse(),
+                        employee.getId()
                 ))
                 .send()
         ).start();
