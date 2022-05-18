@@ -7,7 +7,7 @@ function DefaultLoader({height, width, isCentered, style}) {
         style={style === undefined ? {} : style}>
             <Loader
                 type="BallTriangle"
-                color="seagreen"
+                color="#2196f3"
                 height={height}
                 width={width}
                 timeout={10000}

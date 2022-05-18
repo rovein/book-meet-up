@@ -10,7 +10,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import {ADMIN} from "../util/Constants";
 import {getCurrentUserRole} from "../util/LocalStorageUtils";
 
-function Table({columns, data, operations, tableName, addEntityUrl}) {
+function Table({columns, data, operations, tableName, addEntityUrl, hideTableHeader}) {
     const [isLoaded, setIsLoaded] = useState(true)
 
     const {t} = useTranslation();
@@ -59,13 +59,15 @@ function Table({columns, data, operations, tableName, addEntityUrl}) {
     if (!isLoaded) return <DefaultLoader height={325} width={325}/>;
     return (
         <div>
-            <div className="rooms_back">
-                <p>{t(tableName)}</p>
-                {getCurrentUserRole() === ADMIN && <Button
-                    text={t("Add")}
-                    onClick={_ => window.location.href = addEntityUrl}
-                />}
-            </div>
+            {!hideTableHeader &&
+                <div className="rooms_back">
+                    <p>{t(tableName)}</p>
+                    {getCurrentUserRole() === ADMIN && <Button
+                        text={t("Add")}
+                        onClick={_ => window.location.href = addEntityUrl}
+                    />}
+                </div>
+            }
             <div className="grid">
                 {
                     data.map(element => {
@@ -108,7 +110,15 @@ function Table({columns, data, operations, tableName, addEntityUrl}) {
     )
 }
 
-function DataTableComponent({displayData, displayColumns, operations, tableName, addEntityUrl, sorter}) {
+function DataTableComponent({
+                                displayData,
+                                displayColumns,
+                                operations,
+                                tableName,
+                                addEntityUrl,
+                                sorter,
+                                hideTableHeader
+                            }) {
     const sortedData = displayData.sort(sorter)
     const [data, setData] = useState(sortedData)
     const columns = React.useMemo(() => [...displayColumns], [])
@@ -142,7 +152,8 @@ function DataTableComponent({displayData, displayColumns, operations, tableName,
     }, [])
 
     return (
-        <Table columns={columns} data={data} operations={operations} tableName={tableName} addEntityUrl={addEntityUrl}/>
+        <Table columns={columns} data={data} operations={operations} tableName={tableName} addEntityUrl={addEntityUrl}
+               hideTableHeader={hideTableHeader}/>
     )
 }
 

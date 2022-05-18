@@ -94,7 +94,22 @@ i18n.use(LanguageDetector).init({
                 SendInvitationText: "Enter comma-separated emails to send them an invitation.",
                 InvitationWasSent: "Invitation was successfully sent.",
                 ToInvite: "Invite",
-                GetBack: "Back"
+                GetBack: "Back",
+                ChooseOffice: "Choose an office",
+                ErrorChooseOffice: "You need to choose an office",
+                ChooseDuration: "Choose duration",
+                ErrorChooseDuration: "You need to choose a duration",
+                Create: "Create",
+                FifteenMinutes: "15 minutes",
+                HalfAnHour: "30 minutes",
+                OneHour: "1 hour",
+                OneHourAndHalf: "1 hour 30 minutes",
+                TwoHours: "2 hours",
+                FourHours: "4 hours",
+                SixHours: "6 hours",
+                EightHours: "8 hours",
+                Select: "Select",
+                PassBookingSteps: "Enter params and select meeting room"
             }
         },
         UA: {
@@ -184,7 +199,23 @@ i18n.use(LanguageDetector).init({
                 SendInvitationText: "Введіть список електронних адрес через кому для надіслання запрошення.",
                 InvitationWasSent: "Запрошення було успішно вислано.",
                 ToInvite: "Запросити",
-                GetBack: "Назад"
+                GetBack: "Назад",
+                ChooseOffice: "Оберіть офіс",
+                ErrorChooseOffice: "Вам потрібно обрати офіс",
+                ChooseDuration: "Оберіть тривалість",
+                ErrorChooseDuration: "Вам потрібно обрати тривалість",
+                Create: "Створити",
+                FifteenMinutes: "15 хвилин",
+                HalfAnHour: "30 хвилин",
+                OneHour: "1 година",
+                OneHourAndHalf: "1 година 30 хвилин",
+                TwoHours: "2 години",
+                FourHours: "4 години",
+                SixHours: "6 годин",
+                EightHours: "8 годин",
+                Select: "Обрати",
+                SelectedMeetingRoom: "Обрана кімната для переговорів",
+                PassBookingSteps: "Введіть параметри та оберіть кімнату для переговорів"
             }
         },
     },

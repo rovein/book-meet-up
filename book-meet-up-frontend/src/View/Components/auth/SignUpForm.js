@@ -134,7 +134,7 @@ class SignUpForm extends React.Component {
             return <DefaultLoader height={425} width={425} isCentered={false}/>
         }
         return (
-            <div className="signUpForm">
+            <div className="signUpForm entity-form-border">
                 <div className='signUpContainer'>
                     <h1 className="w3-center">{t('Signup')}</h1>
                     <div className="sized-font w3-center w3-text-red">

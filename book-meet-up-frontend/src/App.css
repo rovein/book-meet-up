@@ -18,9 +18,9 @@ input {
   padding: 30px 10%;
   height: 20px;
   font-size: 14px;
-  background: seagreen;
+  background: #2196f3;
   box-shadow: 0px 7px 5px rgba(35, 51, 72, 0.26);
-  border-bottom: 1px solid darkgreen;
+  border-bottom: 1px solid black;
 }
 .logo {
   margin-right: auto;
@@ -39,7 +39,7 @@ input {
   cursor: pointer;
 }
 .nav_links li a:hover {
-  color: #90c46d;
+  color: black;
 }
 
 #locale {
@@ -73,12 +73,12 @@ input {
 }
 
 .entity-form-border {
-  border: 3px solid black;
+  border: 3px solid #2196f3;
 }
 
 .signInForm,
 .signUpForm h1 {
-  color: black;
+  color: #2196f3;
 }
 
 .signInContainer,
@@ -110,7 +110,7 @@ input {
   padding: 12px;
   font-size: 14px;
   border: none;
-  background: #3fb57e;
+  background: #2196f3;
   cursor: pointer;
   font-style: normal;
   text-transform: uppercase;
@@ -119,8 +119,15 @@ input {
 }
 .btn:hover {
   background: #fbfbfb;
-  border: 1px solid #3fb57e;
-  color: #3fb57e;
+  border: 1px solid #2196f3;
+  color: #2196f3;
+}
+
+.btn:disabled,
+.btn[disabled]{
+  background: lightgray;
+  border: 1px solid black;
+  color: black;
 }
 
 button,
@@ -141,22 +148,19 @@ button:focus {
 
 .card {
   padding: 20px;
-  margin: auto;
   width: 325px;
   text-align: center;
-  margin-top: 30px;
-  border: 3px solid #54A161;
+  margin: 30px auto auto;
+  border: 3px solid #2196f3;
 }
 .profile_back {
-  background: rgb(2, 0, 36);
-  background: #3fb57e;
+  background: #2196f3;
   display: grid;
   grid-template-columns: 60% 40%;
 }
 
 .search_back {
-  background: rgb(2, 0, 36);
-  background: #3fb57e;
+  background: #2196f3;
   padding: 20px 10% 50px;
 }
 
@@ -184,9 +188,9 @@ button:focus {
 }
 
 .rooms_back {
-  color: #3fb57e;
+  color: #2196f3;
   font-weight: bold;
-  border-top: 1px solid darkgreen;
+  border-top: 1px solid black;
   border-bottom: 1px solid black;
 }
 .rooms_back p {
@@ -390,4 +394,11 @@ hr {
 .react-datepicker-wrapper {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+  display: block;
+  width: 100%;
 }

@@ -13,7 +13,7 @@ import {formatMeetingRoomsData} from "../../util/DataFormattingUtil";
 import {showMeetingRoomInfo} from "../../util/AlertUtil";
 import {sortById} from "../../util/TableUtil";
 
-function MeetingRoomsTable({retrieveUrl, additionalOperations}) {
+function MeetingRoomsTable({retrieveUrl, additionalOperations, hideTableHeader}) {
     const [data, setData] = useState([])
     const [isLoaded, setIsLoaded] = useState(false)
 
@@ -77,7 +77,8 @@ function MeetingRoomsTable({retrieveUrl, additionalOperations}) {
 
     if (!isLoaded) return <DefaultLoader height={325} width={325}/>;
     return <DataTableComponent displayData={data} displayColumns={columns} operations={operations}
-                               tableName={"MeetingRooms"} addEntityUrl={"./add-meeting-room"} sorter={sortById}/>
+                               tableName={"MeetingRooms"} addEntityUrl={"./add-meeting-room"} sorter={sortById}
+                               hideTableHeader={hideTableHeader}/>
 }
 
 export default withTranslation()(MeetingRoomsTable);
