@@ -42,7 +42,7 @@ function LoginForm() {
 
     if (!isLoaded) return <DefaultLoader height={400} width={425} isCentered={false}/>;
     return (
-        <form className="signInForm" onSubmit={handleSubmit(onSubmit)}>
+        <form className="signInForm entity-form-border" onSubmit={handleSubmit(onSubmit)}>
             <div className='signInContainer'>
                 <h1 className={"w3-center"}>{t("Login")}</h1>
 
