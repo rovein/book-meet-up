@@ -9,6 +9,7 @@ import {confirmAlert} from "react-confirm-alert";
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import {ADMIN} from "../util/Constants";
 import {getCurrentUserRole} from "../util/LocalStorageUtils";
+import {confirmSendingCancelNotification} from "../util/AlertUtil";
 
 function Table({columns, data, operations, tableName, addEntityUrl, hideTableHeader}) {
     const [isLoaded, setIsLoaded] = useState(true)
@@ -34,28 +35,15 @@ function Table({columns, data, operations, tableName, addEntityUrl, hideTableHea
     }
 
     function handleCancelMeetingOperation(url, elementId, callback) {
-        confirmAlert({
-            title: t("AreYouSure"),
-            message: t("MeetingWillBeCanceled"),
-            buttons: [
-                {
-                    label: t("CancelMeeting"),
-                    onClick: () => {
-                        setIsLoaded(false)
-                        axios.post(url.replace("{id}", elementId))
-                            .then(_ => {
-                                callback(elementId)
-                                setIsLoaded(true)
-                            })
-                    }
-                },
-                {
-                    label: t("Cancel")
-                }
-            ],
-            closeOnEscape: true,
-            closeOnClickOutside: true,
-        });
+        const confirmCallback = () => {
+            setIsLoaded(false)
+            axios.post(url.replace("{id}", elementId))
+                .then(_ => {
+                    callback(elementId)
+                    setIsLoaded(true)
+                })
+        }
+        confirmSendingCancelNotification(t)(elementId, confirmCallback)
     }
 
     function deleteEntity(url, id, deleteCallback) {

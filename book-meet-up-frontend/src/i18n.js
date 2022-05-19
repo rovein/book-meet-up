@@ -117,7 +117,9 @@ i18n.use(LanguageDetector).init({
                 NoAvailableMeetingRooms: "There is no available meeting rooms for provided parameters",
                 SearchingForAvailableMeetingRooms: "Searching for the available meeting rooms...",
                 CancelMeeting: "Cancel",
-                MeetingWillBeCanceled: "After your confirmation the meeting will be canceled"
+                MeetingWillBeCanceled: "After your confirmation the meeting will be canceled",
+                SendCancelNotificationText: "Enter comma-separated emails to send them the notification about canceled meeting.",
+                CancelNotificationWasSent: "Notification about canceled meeting was successfully sent."
             }
         },
         UA: {
@@ -231,7 +233,9 @@ i18n.use(LanguageDetector).init({
                 NoAvailableMeetingRooms: "За обраними параметрами немає вільних кімнат",
                 SearchingForAvailableMeetingRooms: "Шукаємо вільні кімнати...",
                 CancelMeeting: "Скасувати",
-                MeetingWillBeCanceled: "Після вашого підтвердження зустріч буде скасовано"
+                MeetingWillBeCanceled: "Після вашого підтвердження зустріч буде скасовано",
+                SendCancelNotificationText: "Введіть список електронних адрес через кому, для яких бажаєте надіслати сповіщення про скасовану зустріч.",
+                CancelNotificationWasSent: "Сповіщення про скасовану зустріч було успішно вислано."
             }
         },
     },
