@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th {
+            color: #E8E8E8;
+            background: #3385FF;
+        }
+
+        td {
+            padding: 10px 20px;
+            background: #FFC433;
+        }
+
+        table {
+            empty-cells: hide;
+            width: 100%%;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        #more {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<h3 align="center">Скасовано бронювання кімнати</h3>
+<p style="font-size: 16px">
+    %s, повідомляємо про те, що переговорну зустріч, на якій Ви мали бути присутні, було скасовано. Деталі наведено нижче.
+</p>
+<table>
+    <thead>
+    <tr>
+        <th>Дата</th>
+        <th>Час</th>
+        <th>Тривалість</th>
+        <th>Номер кімнати</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>%s</td>
+        <td>%s</td>
+        <td>%s хвилин</td>
+        <td>%s, %s поверх</td>
+    </tr>
+    </tbody>
+</table>
+
+<h3 align="center">
+    Офіс, в якому було створено бронювання
+</h3>
+<table id="2">
+    <thead>
+    <tr>
+        <th>Назва</th>
+        <th>Місто</th>
+        <th>Вулиця</th>
+        <th>Будинок</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>%s</td>
+        <td>%s</td>
+        <td>%s</td>
+        <td>%s</td>
+    </tr>
+    </tbody>
+</table>
+
+<br/>
+<p id="more">Інші бронювання можна переглянути <a href="http://localhost:3000/bookings/by-employee/%s">тут</a>.
+</p>
+</body>
+</html>

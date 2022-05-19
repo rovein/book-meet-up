@@ -106,4 +106,11 @@ public class BookingController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/send-cancel-notification")
+    @ApiOperation(value = "Sends email notification about canceled meeting", nickname = "sendEmailCancelNotification")
+    public ResponseEntity<?> sendEmailCancelNotification(@PathVariable Long id, @RequestBody List<String> emails) {
+        bookingService.sendEmailCancelNotification(id, emails);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

@@ -28,6 +28,8 @@ public interface BookingService {
 
     void sendEmailInvitation(Long bookingId, List<String> emails);
 
+    void sendEmailCancelNotification(Long bookingId, List<String> emails);
+
     void checkAndNotifyAboutUpcomingMeeting();
 
 }

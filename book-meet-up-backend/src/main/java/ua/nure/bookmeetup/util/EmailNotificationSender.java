@@ -26,6 +26,11 @@ public class EmailNotificationSender {
                 employee, booking, booking.getMeetingRoom());
     }
 
+    public static void sendBookingEmailCancelNotification(Employee employee, Booking booking) {
+        sendBookingNotification("email-templates/booking-canceled.html", "Зустріч було скасовано",
+                employee, booking, booking.getMeetingRoom());
+    }
+
     public static void sendBookingEmailReminder(Booking booking) {
         sendBookingNotification("email-templates/meeting-reminder.html", "Нагадування про переговорну зустріч",
                 booking.getEmployee(), booking, booking.getMeetingRoom());

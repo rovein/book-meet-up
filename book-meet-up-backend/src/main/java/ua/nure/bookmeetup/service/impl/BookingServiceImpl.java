@@ -24,16 +24,15 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static ua.nure.bookmeetup.entity.booking.BookingStatus.CREATED;
 import static ua.nure.bookmeetup.entity.booking.BookingStatus.IN_PROGRESS;
+import static ua.nure.bookmeetup.util.EmailNotificationSender.*;
 import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_BOOKING_BY_ID;
 import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_EMPLOYEE_BY_ID;
 import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_MEETING_ROOM_BY_ID;
-import static ua.nure.bookmeetup.util.EmailNotificationSender.sendBookingCreatedEmailNotification;
-import static ua.nure.bookmeetup.util.EmailNotificationSender.sendBookingEmailInvitation;
-import static ua.nure.bookmeetup.util.EmailNotificationSender.sendBookingEmailReminder;
 
 @Service
 @Log4j2
@@ -169,8 +168,19 @@ public class BookingServiceImpl implements BookingService {
     public void sendEmailInvitation(Long bookingId, List<String> emails) {
         Booking booking = bookingRepository.findById(bookingId)
                 .orElseThrow(() -> new EntityNotFoundException(ERROR_FIND_BOOKING_BY_ID));
+        sendEmailForBatchOfUsers(emails, employee -> sendBookingEmailInvitation(employee, booking));
+    }
+
+    @Override
+    public void sendEmailCancelNotification(Long bookingId, List<String> emails) {
+        Booking booking = bookingRepository.findById(bookingId)
+                .orElseThrow(() -> new EntityNotFoundException(ERROR_FIND_BOOKING_BY_ID));
+        sendEmailForBatchOfUsers(emails, employee -> sendBookingEmailCancelNotification(employee, booking));
+    }
+
+    private void sendEmailForBatchOfUsers(List<String> emails, Consumer<Employee> emailSender) {
         List<Employee> invitedEmployees = employeeRepository.findAllWithEmails(emails.toArray(new String[0]));
-        invitedEmployees.forEach(employee -> sendBookingEmailInvitation(employee, booking));
+        invitedEmployees.forEach(emailSender);
     }
 
     @Override
