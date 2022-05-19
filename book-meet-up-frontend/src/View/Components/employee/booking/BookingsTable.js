@@ -4,7 +4,7 @@ import DefaultLoader from "../../ui/Loader";
 import DataTableComponent from "../../ui/DataTable";
 import {useTranslation, withTranslation} from "react-i18next";
 import {getCurrentUserRole} from "../../util/LocalStorageUtils";
-import {ADMIN} from "../../util/Constants";
+import {ADMIN, CANCELED, EMPLOYEE} from "../../util/Constants";
 import {formatBookingData} from "../../util/DataFormattingUtil";
 import {sortByDate} from "../../util/TableUtil";
 import {confirmAlert} from "react-confirm-alert";
@@ -78,6 +78,18 @@ function BookingsTable({retrieveBookingsUrl, columns}) {
             "onClickPassParameter": "id"
         }
     ]
+
+    const isCancelButtonDisabled = booking => booking.status === t("Canceled") || booking.status === t("Finished")
+
+    if (getCurrentUserRole() === EMPLOYEE) {
+        operations.push({
+            "name": "CancelMeeting",
+            "className": "btn btn-danger-warning",
+            "onClickPassParameter": "id",
+            "url": "bookings/cancel/{id}",
+            "disabledCondition": isCancelButtonDisabled
+        })
+    }
 
     if (getCurrentUserRole() === ADMIN) {
         operations.push({

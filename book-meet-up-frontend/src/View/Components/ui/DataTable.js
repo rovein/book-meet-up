@@ -33,6 +33,31 @@ function Table({columns, data, operations, tableName, addEntityUrl, hideTableHea
         });
     }
 
+    function handleCancelMeetingOperation(url, elementId, callback) {
+        confirmAlert({
+            title: t("AreYouSure"),
+            message: t("MeetingWillBeCanceled"),
+            buttons: [
+                {
+                    label: t("CancelMeeting"),
+                    onClick: () => {
+                        setIsLoaded(false)
+                        axios.post(url.replace("{id}", elementId))
+                            .then(_ => {
+                                callback(elementId)
+                                setIsLoaded(true)
+                            })
+                    }
+                },
+                {
+                    label: t("Cancel")
+                }
+            ],
+            closeOnEscape: true,
+            closeOnClickOutside: true,
+        });
+    }
+
     function deleteEntity(url, id, deleteCallback) {
         setIsLoaded(false)
         axios.delete(`/${url}`)
@@ -91,11 +116,16 @@ function Table({columns, data, operations, tableName, addEntityUrl, hideTableHea
                                     })}
                                     {operations.map(operation => {
                                         return (<Button
+                                            id = {operation.name + element.id}
                                             className={operation.className}
                                             text={t(operation.name)}
+                                            disabled={operation.disabledCondition ? operation.disabledCondition(element) : false}
                                             onClick={() => {
                                                 if (operation.name === 'Delete') {
                                                     handleDeleteOperation(operation.url,
+                                                        element[operation.onClickPassParameter], operation.onClick)
+                                                } else if (operation.name === 'CancelMeeting') {
+                                                    handleCancelMeetingOperation(operation.url,
                                                         element[operation.onClickPassParameter], operation.onClick)
                                                 } else {
                                                     operation.onClick(element[operation.onClickPassParameter])
@@ -134,6 +164,12 @@ function DataTableComponent({
         setData(data.filter(entry => entry.id != id))
     }
 
+    function cancelBooking(id) {
+        let index = data.findIndex(entry => entry.id == id);
+        data[index].status = t("Canceled")
+        data[index].statusStyle = 'text-bold text-danger'
+    }
+
     const translateTableData = () => {
         setData(data.map(entry => {
             translateColumns.forEach(column => {
@@ -147,6 +183,9 @@ function DataTableComponent({
         operations.forEach(operation => {
             if (operation.name === "Delete") {
                 operation.onClick = deleteEntity
+            }
+            if (operation.name === "CancelMeeting") {
+                operation.onClick = cancelBooking
             }
         })
         if (_.isEmpty(translateColumns)) return;
