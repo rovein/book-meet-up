@@ -29,6 +29,7 @@ function CreateBookingForm() {
     const [error, setError] = useState("");
     const {handleSubmit, formState: {errors}} = useForm()
     const {t} = useTranslation()
+    const durationOptions = getBookingDurations(t)
 
     const submitButtonRef = useRef(null);
 
@@ -58,7 +59,7 @@ function CreateBookingForm() {
         if (selectedOfficeBuildingId === 0 || selectedDuration === 0) return
         setShowMeetingRooms(false)
         const meetingRoomsUrl = `/office-buildings/${selectedOfficeBuildingId}/meeting-rooms/available-for-booking`
-        const dateTime = Moment(selectedDate).format("yyyy-MM-DDTHH:MM")
+        const dateTime = Moment(selectedDate).format("yyyy-MM-DDTHH:mm")
         setRetrieveBookingsUrl(`${meetingRoomsUrl}?dateTime=${dateTime}&duration=${selectedDuration}`)
         setShowMeetingRooms(true)
     }, [selectedOfficeBuildingId, selectedDate, selectedDuration])
@@ -77,7 +78,7 @@ function CreateBookingForm() {
         data.employeeId = getCurrentEmployeeId();
         data.meetingRoomId = selectedMeetingRoomId;
         data.date = Moment(selectedDate).format("yyyy-MM-DD")
-        data.time = Moment(selectedDate).format("HH:MM")
+        data.time = Moment(selectedDate).format("HH:mm")
         data.duration = selectedDuration;
         axios.post('/bookings', data)
             .then(result => {
@@ -145,7 +146,7 @@ function CreateBookingForm() {
 
                     <div>
                         <div>
-                            <Select placeholder={t("ChooseDuration")} options={getBookingDurations(t)} onChange={e => {
+                            <Select placeholder={t("ChooseDuration")} options={durationOptions} onChange={e => {
                                 setSelectedDuration(parseInt(e.value))
                                 delete errors.duration
                             }}/>

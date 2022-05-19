@@ -1,7 +1,8 @@
 export const COLUMNS = [
     {
         accessor: 'status',
-        applyCustomStyle: 'statusStyle'
+        applyCustomStyle: 'statusStyle',
+        toTranslate: true
     },
     {
         Header: 'OfficeBuilding',
@@ -14,5 +15,6 @@ export const COLUMNS = [
     {
         Header: 'Duration',
         accessor: 'duration',
+        toTranslate: true
     }
 ]

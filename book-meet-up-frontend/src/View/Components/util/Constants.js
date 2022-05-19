@@ -6,42 +6,72 @@ export const EMPLOYEE = "EMPLOYEE";
 export const OFFICE_BUILDINGS = "OFFICE_BUILDINGS";
 export const EMPLOYEES = "EMPLOYEES";
 
-export const getBookingDurations = t => [
-    {
-        value: 15,
-        label: t("FifteenMinutes")
-    },
-    {
-        value: 30,
-        label: t("HalfAnHour")
-    },
-    {
-        value: 60,
-        label: t("OneHour")
-    },
-    {
-        value: 90,
-        label: t("OneHourAndHalf")
-    },
-    {
-        value: 120,
-        label: t("TwoHours")
-    },
-    {
-        value: 240,
-        label: t("FourHours")
-    },
-    {
-        value: 360,
-        label: t("SixHours")
-    },
-    {
-        value: 480,
-        label: t("EightHours")
-    }
-]
+export const getBookingDurations = t => {
+    const durations = [
+        {
+            value: 15,
+            translateKey: "FifteenMinutes",
+        },
+        {
+            value: 30,
+            translateKey: "HalfAnHour"
+        },
+        {
+            value: 60,
+            translateKey: "OneHour"
+        },
+        {
+            value: 90,
+            translateKey: "OneHourAndHalf"
+        },
+        {
+            value: 120,
+            translateKey: "TwoHours"
+        },
+        {
+            value: 240,
+            translateKey: "FourHours"
+        },
+        {
+            value: 360,
+            translateKey: "SixHours"
+        },
+        {
+            value: 480,
+            translateKey: "EightHours"
+        }
+    ]
+
+    return durations.map(duration => {
+        if (t) duration.label = t(duration.translateKey);
+        return duration
+    })
+}
 
 export const CREATED = "CREATED";
 export const IN_PROGRESS = "IN_PROGRESS";
 export const CANCELED = "CANCELED";
 export const FINISHED = "FINISHED";
+
+export const BOOKING_STATUSES = [
+    {
+        value: CREATED,
+        translateKey: "Created",
+        style: "text-info"
+    },
+    {
+        value: IN_PROGRESS,
+        translateKey: "InProgress",
+        style: "text-warning"
+    },
+    {
+        value: CANCELED,
+        translateKey: "Canceled",
+        style: "text-danger"
+    },
+    {
+        value: FINISHED,
+        translateKey: "Finished",
+        style: "text-success"
+    }
+]

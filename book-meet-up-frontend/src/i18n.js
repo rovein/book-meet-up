@@ -109,7 +109,11 @@ i18n.use(LanguageDetector).init({
                 SixHours: "6 hours",
                 EightHours: "8 hours",
                 Select: "Select",
-                PassBookingSteps: "Enter params and select meeting room"
+                PassBookingSteps: "Enter params and select meeting room",
+                Created: "Created",
+                InProgress: "In progress",
+                Canceled: "Canceled",
+                Finished: "Finished"
             }
         },
         UA: {
@@ -215,7 +219,11 @@ i18n.use(LanguageDetector).init({
                 EightHours: "8 годин",
                 Select: "Обрати",
                 SelectedMeetingRoom: "Обрана кімната для переговорів",
-                PassBookingSteps: "Введіть параметри та оберіть кімнату для переговорів"
+                PassBookingSteps: "Введіть параметри та оберіть кімнату для переговорів",
+                Created: "Створено", //blue
+                InProgress: "В процесі", //yellow
+                Canceled: "Скасовано", //red
+                Finished: "Завершено" //green
             }
         },
     },

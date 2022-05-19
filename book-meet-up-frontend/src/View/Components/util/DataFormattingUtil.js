@@ -1,5 +1,6 @@
 import React from "react";
 import Moment from "moment";
+import {BOOKING_STATUSES, getBookingDurations} from "./Constants";
 
 export const formatEmployeeData = employee => {
     const activatedAccount = "accIsActive"
@@ -27,8 +28,14 @@ export const formatMeetingRoomsData = meetingRoom => {
 export const formatBookingData = booking => {
     const dateTime = booking.date + 'T' + booking.time
     booking.displayTitle = Moment(dateTime).format('DD.MM.YYYY HH:mm')
-    booking.duration = booking.duration + " min."
-    booking.statusStyle = 'text-bold'
+
+    const duration = getBookingDurations().find(duration => duration.value === booking.duration)
+    booking.durationTranslate = duration ? duration.translateKey : booking.duration + " min."
+
+    const bookingStatus = BOOKING_STATUSES.find(status => status.value === booking.status)
+    booking.statusTranslate = bookingStatus.translateKey
+    booking.statusStyle = 'text-bold ' + bookingStatus.style
+
     return booking;
 }
 

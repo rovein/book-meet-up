@@ -353,6 +353,14 @@ input[type="checkbox"].switch:checked + div > div {
   color: forestgreen;
 }
 
+.text-warning {
+  color: darkorange;
+}
+
+.text-info {
+  color: #2196f3;
+}
+
 .btn-danger {
   background-color: red;
 }
