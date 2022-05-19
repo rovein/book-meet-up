@@ -68,6 +68,9 @@ function Table({columns, data, operations, tableName, addEntityUrl, hideTableHea
                     />}
                 </div>
             }
+            {
+                (hideTableHeader && data.length === 0) && <h1 className="w3-center">{t("NoAvailableMeetingRooms")}</h1>
+            }
             <div className="grid">
                 {
                     data.map(element => {

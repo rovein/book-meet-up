@@ -75,7 +75,9 @@ function MeetingRoomsTable({retrieveUrl, additionalOperations, hideTableHeader})
             });
     }
 
-    if (!isLoaded) return <DefaultLoader height={325} width={325}/>;
+    if (!isLoaded) return hideTableHeader ?
+        <h1 className="w3-center">{t("SearchingForAvailableMeetingRooms")}</h1> :
+        <DefaultLoader height={325} width={325}/>;
     return <DataTableComponent displayData={data} displayColumns={columns} operations={operations}
                                tableName={"MeetingRooms"} addEntityUrl={"./add-meeting-room"} sorter={sortById}
                                hideTableHeader={hideTableHeader}/>

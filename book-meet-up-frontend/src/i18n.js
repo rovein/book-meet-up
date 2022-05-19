@@ -113,7 +113,9 @@ i18n.use(LanguageDetector).init({
                 Created: "Created",
                 InProgress: "In progress",
                 Canceled: "Canceled",
-                Finished: "Finished"
+                Finished: "Finished",
+                NoAvailableMeetingRooms: "There is no available meeting rooms for provided parameters",
+                SearchingForAvailableMeetingRooms: "Searching for the available meeting rooms..."
             }
         },
         UA: {
@@ -223,7 +225,9 @@ i18n.use(LanguageDetector).init({
                 Created: "Створено", //blue
                 InProgress: "В процесі", //yellow
                 Canceled: "Скасовано", //red
-                Finished: "Завершено" //green
+                Finished: "Завершено", //green
+                NoAvailableMeetingRooms: "За обраними параметрами немає вільних кімнат",
+                SearchingForAvailableMeetingRooms: "Шукаємо вільні кімнати..."
             }
         },
     },
