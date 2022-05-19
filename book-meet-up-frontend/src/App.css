@@ -402,3 +402,7 @@ hr {
   display: block;
   width: 100%;
 }
+
+textarea {
+  resize: none;
+}

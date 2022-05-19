@@ -46,7 +46,7 @@ function BookingsTable({retrieveBookingsUrl, columns}) {
                                     <h1>{t("SendInvitationHeader")}</h1>
                                     {t("SendInvitationText")}
                                     <br/>
-                                    <input type='text' id='invitation-input' style={{width: "540px"}}/>
+                                    <textarea id='invitation-input' rows={3} style={{width: "100%"}}/>
                                     <div className="react-confirm-alert-button-group">
                                         <button onClick={() => {
                                             const input = document.getElementById('invitation-input').value;
