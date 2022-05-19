@@ -226,7 +226,7 @@ i18n.use(LanguageDetector).init({
                 Select: "Обрати",
                 SelectedMeetingRoom: "Обрана кімната для переговорів",
                 PassBookingSteps: "Введіть параметри та оберіть кімнату для переговорів",
-                Created: "Створено", //blue
+                Created: "Заплановано", //blue
                 InProgress: "В процесі", //yellow
                 Canceled: "Скасовано", //red
                 Finished: "Завершено", //green

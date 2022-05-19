@@ -137,6 +137,7 @@ function CreateBookingForm() {
                     </div>
 
                     <DatePicker
+                        minDate={new Date()}
                         selected={selectedDate}
                         showTimeSelect
                         filterTime={filterPassedTime}

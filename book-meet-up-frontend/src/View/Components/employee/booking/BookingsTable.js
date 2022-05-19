@@ -22,35 +22,32 @@ function BookingsTable({retrieveBookingsUrl, columns}) {
             })
     }, [])
 
+    const isCancelOrInviteButtonDisabled = booking => booking.status === t("Canceled") || booking.status === t("Finished")
+
     const operations = [
         {
             "name": "Invite",
             "onClick": confirmSendingInvitation(t),
             "className": "btn btn-info",
-            "onClickPassParameter": "id"
+            "onClickPassParameter": "id",
+            "disabledCondition": isCancelOrInviteButtonDisabled
         }
     ]
 
-    const isCancelButtonDisabled = booking => booking.status === t("Canceled") || booking.status === t("Finished")
+    operations.push({
+        "name": "CancelMeeting",
+        "className": "btn btn-danger-warning",
+        "onClickPassParameter": "id",
+        "url": "bookings/cancel/{id}",
+        "disabledCondition": isCancelOrInviteButtonDisabled
+    })
 
-    if (getCurrentUserRole() === EMPLOYEE) {
-        operations.push({
-            "name": "CancelMeeting",
-            "className": "btn btn-danger-warning",
-            "onClickPassParameter": "id",
-            "url": "bookings/cancel/{id}",
-            "disabledCondition": isCancelButtonDisabled
-        })
-    }
-
-    if (getCurrentUserRole() === ADMIN) {
-        operations.push({
-            "name": "Delete",
-            "className": "btn btn-danger",
-            "onClickPassParameter": "id",
-            "url": "bookings/{id}",
-        })
-    }
+    operations.push({
+        "name": "Delete",
+        "className": "btn btn-danger",
+        "onClickPassParameter": "id",
+        "url": "bookings/{id}",
+    })
 
     if (!isLoaded) return <DefaultLoader height={425} width={425}/>;
     return <DataTableComponent displayData={data} displayColumns={columns} tableName={"Bookings"}
