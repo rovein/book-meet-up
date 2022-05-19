@@ -16,5 +16,9 @@ export const COLUMNS = [
         Header: 'Duration',
         accessor: 'duration',
         toTranslate: true
+    },
+    {
+        Header: 'FinishTime',
+        accessor: 'finishTime'
     }
 ]

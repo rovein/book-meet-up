@@ -75,7 +75,7 @@ function Table({columns, data, operations, tableName, addEntityUrl, hideTableHea
             {!hideTableHeader &&
                 <div className="rooms_back">
                     <p>{t(tableName)}</p>
-                    {getCurrentUserRole() === ADMIN && <Button
+                    {(getCurrentUserRole() === ADMIN && tableName !== 'Bookings') && <Button
                         text={t("Add")}
                         onClick={_ => window.location.href = addEntityUrl}
                     />}

@@ -71,7 +71,7 @@ i18n.use(LanguageDetector).init({
                 eExist: "Such email already exist in system!",
                 ConfirmPassword: "Confirm password",
                 AreYouSure: "Are you sure?",
-                NotRecover: "You will not be able to restore this without administrator.",
+                NotRecover: "You will not be able to restore deleted data.",
                 Show: "Show",
                 ToMeetingRooms: "Meeting rooms",
                 ErrorResponse: "Something went wrong. Try again later.",
@@ -119,7 +119,8 @@ i18n.use(LanguageDetector).init({
                 CancelMeeting: "Cancel",
                 MeetingWillBeCanceled: "After your confirmation the meeting will be canceled",
                 SendCancelNotificationText: "Enter comma-separated emails to send them the notification about canceled meeting.",
-                CancelNotificationWasSent: "Notification about canceled meeting was successfully sent."
+                CancelNotificationWasSent: "Notification about canceled meeting was successfully sent.",
+                FinishTime: "Finish time"
             }
         },
         UA: {
@@ -184,7 +185,7 @@ i18n.use(LanguageDetector).init({
                 EMeetingRoomNumber: "Формат номеру кімнати неправильний!",
                 EMeetingRoomFloor: "Формат поверху неправильний!",
                 EMeetingRoomInfo: "Формат інформації неправильний!",
-                NotRecover: "Ви не зможете відновати дані без адміністратора.",
+                NotRecover: "Ви не зможете відновати видалені дані.",
                 AreYouSure: "Ви впевнені?",
                 Search: "Пошук",
                 eExist: "Така електронна пошта вже існує в системі!",
@@ -235,7 +236,8 @@ i18n.use(LanguageDetector).init({
                 CancelMeeting: "Скасувати",
                 MeetingWillBeCanceled: "Після вашого підтвердження зустріч буде скасовано",
                 SendCancelNotificationText: "Введіть список електронних адрес через кому, для яких бажаєте надіслати сповіщення про скасовану зустріч.",
-                CancelNotificationWasSent: "Сповіщення про скасовану зустріч було успішно вислано."
+                CancelNotificationWasSent: "Сповіщення про скасовану зустріч було успішно вислано.",
+                FinishTime: "Час закінчення"
             }
         },
     },

@@ -36,6 +36,8 @@ export const formatBookingData = booking => {
     booking.statusTranslate = bookingStatus.translateKey
     booking.statusStyle = 'text-bold ' + bookingStatus.style
 
+    booking.finishTime = Moment(dateTime).add(booking.duration, 'minutes').format('HH:mm')
+
     return booking;
 }
 
