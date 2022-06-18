@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import static ua.nure.bookmeetup.util.BookingUtil.isRoomAvailableForBooking;
 import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_MEETING_ROOM_BY_ID;
 import static ua.nure.bookmeetup.util.ErrorMessagesUtil.ERROR_FIND_OFFICE_BUILDING_BY_ID;
 
@@ -99,29 +100,6 @@ public class MeetingRoomServiceImpl implements MeetingRoomService {
                 officeBuilding.getMeetingRooms().stream()
                         .filter(meetingRoom -> isRoomAvailableForBooking(meetingRoom, dateTime, duration))
                         .collect(Collectors.toList())
-        );
-    }
-
-    private boolean isRoomAvailableForBooking(MeetingRoom meetingRoom, LocalDateTime requestedStartDateTime,
-                                              Short duration) {
-        Predicate<Booking> requestedTimeSlotHasConflict = booking -> {
-            var requestedEndTime = requestedStartDateTime.plusMinutes(duration);
-            var bookingStartTime = booking.startDateAndTime();
-            var bookingEndTime = booking.endDateAndTime();
-            var requestedInterval = createInterval(requestedStartDateTime, requestedEndTime);
-            var bookingInterval = createInterval(bookingStartTime, bookingEndTime);
-            return requestedInterval.overlaps(bookingInterval);
-        };
-        return meetingRoom.getBookings().stream()
-                .filter(booking -> booking.getDate().isEqual(requestedStartDateTime.toLocalDate()))
-                .filter(booking -> !(booking.isCanceled() || booking.isFinished()))
-                .noneMatch(requestedTimeSlotHasConflict);
-    }
-
-    private Interval createInterval (LocalDateTime from, LocalDateTime to) {
-        return Interval.of(
-                Instant.from(ZonedDateTime.of(from, ZoneId.systemDefault())),
-                Instant.from(ZonedDateTime.of(to, ZoneId.systemDefault()))
         );
     }
 

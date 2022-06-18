@@ -1,6 +1,9 @@
 package ua.nure.bookmeetup.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
@@ -13,16 +16,19 @@ import ua.nure.bookmeetup.entity.MeetingRoom;
 import ua.nure.bookmeetup.entity.booking.Booking;
 import ua.nure.bookmeetup.entity.booking.BookingStatus;
 import ua.nure.bookmeetup.entity.user.Employee;
+import ua.nure.bookmeetup.exception.BookingCreationException;
 import ua.nure.bookmeetup.exception.EntityNotFoundException;
 import ua.nure.bookmeetup.repository.EmployeeRepository;
 import ua.nure.bookmeetup.repository.MeetingRoomRepository;
 import ua.nure.bookmeetup.repository.BookingRepository;
 import ua.nure.bookmeetup.service.BookingService;
+import ua.nure.bookmeetup.util.BookingUtil;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -56,6 +62,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @SneakyThrows
     public BookingResponseDto createSingle(BookingRequestDto bookingRequestDto) {
         Employee employee = employeeRepository
                 .findById(bookingRequestDto.getEmployeeId())
@@ -63,6 +70,13 @@ public class BookingServiceImpl implements BookingService {
         MeetingRoom meetingRoom = meetingRoomRepository
                 .findById(bookingRequestDto.getMeetingRoomId())
                 .orElseThrow(() -> new EntityNotFoundException(ERROR_FIND_MEETING_ROOM_BY_ID));
+
+        LocalDateTime requestedDateTime = LocalDateTime.of(bookingRequestDto.getDate(), bookingRequestDto.getTime());
+        if (!BookingUtil.isRoomAvailableForBooking(meetingRoom, requestedDateTime, bookingRequestDto.getDuration())) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            var error = objectMapper.writeValueAsString(Map.of("errorKey", "RoomIsAlreadyBusy"));
+            throw new BookingCreationException(error);
+        }
 
         Booking booking = BookingMapper.toBooking(bookingRequestDto);
         booking.setEmployee(employee);

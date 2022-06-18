@@ -1,5 +1,6 @@
 package ua.nure.bookmeetup.exception;
 
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,6 +24,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         HttpMethod httpMethod = Objects.requireNonNull(((ServletWebRequest) request).getHttpMethod());
         HttpStatus httpStatus = httpMethod.matches("DELETE") ? HttpStatus.NO_CONTENT : HttpStatus.NOT_FOUND;
         return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), httpStatus, request);
+    }
+
+    @ExceptionHandler(value = {BookingCreationException.class})
+    @SneakyThrows
+    protected ResponseEntity<Object> handleBookingCreationException(RuntimeException ex, WebRequest request) {
+        log.error("Error while creating a new booking", ex);
+        String errorJsonBody = ex.getMessage();
+        return handleExceptionInternal(ex, errorJsonBody, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
 }
