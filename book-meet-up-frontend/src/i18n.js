@@ -120,7 +120,9 @@ i18n.use(LanguageDetector).init({
                 MeetingWillBeCanceled: "After your confirmation the meeting will be canceled",
                 SendCancelNotificationText: "Enter comma-separated emails to send them the notification about canceled meeting.",
                 CancelNotificationWasSent: "Notification about canceled meeting was successfully sent.",
-                FinishTime: "Finish time"
+                FinishTime: "Finish time",
+                AddMeetingRoom: "Add meeting room",
+                RoomIsAlreadyBusy: "Room was already booked by another user. Choose another."
             }
         },
         UA: {
@@ -237,7 +239,9 @@ i18n.use(LanguageDetector).init({
                 MeetingWillBeCanceled: "Після вашого підтвердження зустріч буде скасовано",
                 SendCancelNotificationText: "Введіть список електронних адрес через кому, для яких бажаєте надіслати сповіщення про скасовану зустріч.",
                 CancelNotificationWasSent: "Сповіщення про скасовану зустріч було успішно вислано.",
-                FinishTime: "Час закінчення"
+                FinishTime: "Час закінчення",
+                AddMeetingRoom: "Додати приміщення переговорів",
+                RoomIsAlreadyBusy: "Кімната вже була заброньована іншим користувачем. Оберіть іншу."
             }
         },
     },

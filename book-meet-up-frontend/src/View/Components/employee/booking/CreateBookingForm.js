@@ -50,8 +50,13 @@ function CreateBookingForm() {
         setIsLoaded(true);
     }, [officeBuildingOptions])
 
-    const handleError = _ => {
-        setError("ErrorResponse")
+    const handleError = e => {
+        if (e.response.status >= 500) {
+            setError("ErrorResponse")
+        } else {
+            const data = e.response.data
+            setError(data.errorKey)
+        }
         setIsLoaded(true)
     }
 
