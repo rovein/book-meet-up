@@ -11,7 +11,7 @@ UML designs are located [here](https://drive.google.com/drive/folders/1OAO73wSq8
 
 # Implemented features
 
-Briefly about the implemented functions: registration, authorization, profile management, booking creation, sending invitation for the booking, canceling the booking with notification, receiving remainders about upcoming meetings, all CRUD operations, sending letters to mail, administration functions: managing user accounts, blocking accounts, CRUD for all entities and bookings management.
+Briefly about the implemented functions: registration, authorization, profile management, booking creation, sending invitation for the booking, canceling the booking with notification, receiving remainders about upcoming meetings, all CRUD operations, sending letters to mail, administration functions: managing user accounts, blocking accounts, CRUD for all entities and bookings management.<br>
 Business logic: system has two user roles: employee and administrator. One the most important use case for the employee is creating a booking of the meeting room. To create a booking employee must enter the date, time, duration and choose the office. The he receives a list of meeting rooms that are available for booking (i.e. there is no interval conflicts with this timeslot). After booking creation employee receives the confirmation letter. Also, an employee can send an invitation for the meeting, cancel it and receive remainders about the upcoming meetings.
 
 ## How to run
